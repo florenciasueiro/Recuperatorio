@@ -1,0 +1,460 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+}
+
+
+html {
+    box-sizing: border-box;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+body {
+  background-color: #540000;
+  color: #DFCCBB
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #370000;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+
+header {
+  display: flex;
+  position: fixed;
+  z-index: 10;
+  width: 100vw;
+  background-color: rgba(84, 0, 0, 1);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+  box-shadow: 11px 11px 36px #370000;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: #540000;
+}
+
+p a,
+ul li a,
+ol li a {
+  color: #DFCCBB;
+  text-decoration: none;
+  margin: 10px;
+  font-size: 20px;
+}
+
+p strong,
+ul li strong,
+ol li strong {
+    font-weight: 700;
+}
+
+p em,
+ul li em,
+ol li em {
+    font-style: italic;
+}
+
+button,
+input[type='button'],
+input[type='submit'] {
+    margin: 0 2rem;
+    border: none;
+    border-radius: 0.5em;
+    padding: 0.25em 0.5em;
+    border-radius: 50px;
+    background: linear-gradient(145deg, #5a0000, #4c0000);
+    box-shadow:  11px 11px 36px #370000,
+             -11px -11px 36px #710000;
+    cursor: pointer;
+    font-size: 2.4em;
+    text-align: center;
+}
+
+input[type='button']:disabled,
+input[type='submit']:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+}
+
+footer ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    list-style: none;
+}
+
+footer ul li {
+    font-family: 'Montserrat';
+    font-size: 1.4em;
+    text-align: center;
+    color: #d0e0e3;
+}
+
+footer ul li a {
+    font-family: 'Montserrat';
+    font-size: 1em;
+    text-decoration: none;
+    color: #d0e0e3;
+}
+
+  h1 {
+      text-align: center;
+  }
+  h4 {
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+  }
+  .borrar-curso {
+      border-radius: 50%;
+      padding: 5px 10px;
+      text-decoration: none;
+      color: #540000;
+      font-weight: bold;
+  }
+  .fa-circle-xmark{
+    color: #540000;
+    font-size: 20px;
+  }
+
+  .fa-shopping-cart{
+    font-size: 20px;
+  }
+  
+  ul {
+      list-style: none;
+  }
+
+  #encabezado {
+      margin-top: 150px;
+      font-size: 40px;
+  }
+  .submenu {
+      position: relative;
+  }
+  
+  .submenu #carrito{
+      display: none;
+  }
+  .submenu #carrito{
+      display: block;
+      position: absolute;
+      right:0;
+      top:100%;
+      z-index: 1;
+      background-color: #DFCCBB;
+      color: #540000;
+      padding: 20px;
+      border-radius: 10px;
+  }
+
+  .agregar-carrito {
+      margin:10px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .two{
+      cursor: pointer;
+    }
+
+
+
+
+    
+  
+  .card {
+        text-align: center;
+        border-radius: 50px;
+        background: linear-gradient(145deg, #5a0000, #4c0000);
+        box-shadow:  11px 11px 36px #370000, -11px -11px 36px #710000;
+  }
+
+  .info-card  {
+      padding: 10px 20px;
+  }
+  
+  .info-card p, 
+  .card h4 {
+      margin-bottom: 5px;
+  }
+  .info-card .precio {
+      font-size: 18px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+  }
+  .info-card .precio span {
+      font-weight: 700;
+      font-size: 22px;
+  }
+
+
+  .button,
+  button,
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"] {
+    display: flex;
+    align-items: center;
+    height: 46px;
+    padding: 0 20px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 38px;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    cursor: pointer;
+    box-sizing: border-box;
+    color: #DFCCBB; 
+  }
+
+  .button.button-primary,
+  button.button-primary,
+  input[type="submit"].button-primary,
+  input[type="reset"].button-primary,
+  input[type="button"].button-primary {
+    border: none;
+    border-radius: 50px;
+    background: #5a0000;
+    color: #DFCCBB;
+  }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus{
+    border-radius: 50px;
+    background: #540000;
+    box-shadow: inset 11px 11px 36px #370000,
+                inset -11px -11px 36px #710000;}
+  
+
+  th,
+  td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #540000; }
+  th:first-child,
+  td:first-child {
+    padding-left: 0; }
+  th:last-child,
+  td:last-child {
+    padding-right: 0; }
+  
+  
+  .u-full-width {
+    box-sizing: border-box;
+    justify-content: center;
+    color: #540000;
+     }
+
+    .logo{
+        width: 4vw;
+    }
+
+  .grilla{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+  }
+
+  .slideHorizontal {
+    display: flex;
+    overflow-x: scroll;
+  }
+  
+  .card {
+    flex: 0 0 auto;
+    margin: 30px;
+  }
+
+
+  .slideContainer {
+    position: relative;
+    width: 90%;
+    overflow-x: hidden;
+  }
+  
+  
+  .slideControl {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .slideControlLeft {
+    left: 0;
+  }
+  
+  .slideControlRight {
+    right: 0;
+  }
+
+  .circulo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 25px auto;
+  }
+  
+  .circulo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #370000;
+  }
+  
+
+
+  .tiposDeVinos{
+    /* font-weight: 500; */
+    rotate: -90deg;
+    font-size: 50px;
+  }
+
+
+  /* .containerProduct{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+  } */
+
+  .container{
+    margin: auto;
+  }
+
+  .filtros{
+    display: flex;
+    justify-content: end;
+  }
+
+
+#slideContainer{
+  display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+  .tipos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slick-slider{
+    display: flex!important;
+    align-items: center;
+  }
+
+  .navbar{
+    display: flex;
+  }
+
+  .navbar ul{
+    display: inline-flex;
+    list-style: none;
+  }
+
+  .row{
+    display: inline-flex;
+    width: 100vw;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+
+  #contador-carrito{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: -12px;
+    right: -13px;
+    background: #DFCCBB;
+    color: #540000;
+    font-weight: 600;
+    font-size: 1.5rem;
+    padding: 0px 5px;
+    /* height: 12px; */
+    /* width: 12px; */
+    border-radius: 50px;
+  }
+
+
+  .cantidad-carrito{
+    color: #540000;
+    background: transparent;
+    border: none;
+    text-align: center;
+  }
+
+  .cantidad{
+    color: #DFCCBB;
+    background: transparent;
+    border: none;
+    text-align: center;
+  }
+
+
+  .cantidad-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+
+  .carrito-container {
+    max-height: 700px;
+    overflow: auto; 
+  }
+  
