@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Compra - Programación I | Parcial 2 | Sueiro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://kit.fontawesome.com/231d7a05ce.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-BDzFvYZDd3fuTn0B1d9EDcx6zhrC/N31AAm0u9TGhXkySDU7IVfZEYSDwQ4Uy5rO" crossorigin="anonymous">
+
+</head>
+<body>
+    <header id="header" class="header">
+        <div class="container">
+            <div class="row">
+                <div class="four columns">
+                    <a href="index.html">
+                        <img class="logo" src="img/Logo.png" alt="Logo">
+                    </a>
+                </div>
+                <nav class="navbar">
+                    <ul>
+                        <li><a href="">Sobre Nosotros</a></li>
+                        <li><a href="">Tipos de vinos</a></li>
+                        <li><a href="">Maridaje</a></li>
+                        <li><a href="">Comprar</a></li>
+                        <li><a href="">Contacto</a></li>
+                    </ul>
+                </nav>
+                <div class="two columns u-pull-right">
+                    <ul>
+                        <li class="submenu">
+                            <i class="fas fa-shopping-cart" id="carrito-icono"></i>
+                            <span id="contador-carrito">0</span>
+                            <div id="carrito" style="display: none;">
+                                <div class="carrito-container">
+                                    <table id="lista-carrito" class="u-full-width">
+                                        <thead>
+                                            <tr>
+                                                <th>Imagen</th>
+                                                <th>Nombre</th>
+                                                <th>Precio</th>
+                                                <th>Cant</th>
+                                                <th><p id="precio-total">Total: $0.00</p></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    <a href="#" id="vaciar-carrito" class="buttonShop u-full-width">Vaciar Carrito</a>
+
+                                    <!-- Agregar el botón "Comprar" -->
+                                    <a href="compra.html" id="comprar-btn" class="buttonShop u-full-width">Comprar</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="mainscreen">
+          <div class="cardShop">
+            <div class="leftside">
+                <div>
+                    <div id="carrito">
+                        <div class="carrito-container">
+                          <table id="lista-carrito" class="u-full-width">
+                            <thead>
+                              <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Cant</th>
+                                <th><p id="precio-total">Total: $0.00</p></th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody></tbody>
+                          </table>
+                          </div>
+                      </div>
+                </div>
+            </div>
+            <div class="rightside">
+              <form action="">
+                <h2>Información de pago</h2>
+                <p>Nombre como figura en la tarjeta</p>
+                <input type="text" class="inputbox" name="name" required />
+
+<label class="labelShop" for="lstTipoTarjeta">Tipo de Tarjeta</label>
+    <select id="lstTipoTarjeta">
+        <option value="VISA">VISA</option>
+        <option value="MASTERCARD">Mastercard</option>
+        <option value="AMEX">AMEX</option>
+        <option value="CABAL">Cabal</option>
+        <option value="NARANJA">Naranja</option>
+    </select>
+    
+    <label class="labelShop" for="nro_tarjeta">Número de Tarjeta</label>
+    <input type="text" class="inputbox" id="nro_tarjeta" />
+    <span id="err_nro_tarjeta"></span>
+    
+    <div class="expcvv">
+        
+        <p class="expcvv_text">Fecha de vencimiento</p>
+        <input type="month" class="inputbox" name="exp_date" id="exp_date" required />
+        
+        <p class="expcvv_text2">CVV</p>
+        <input type="text" class="inputbox" name="cvv" id="cvv" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.slice(0, 3);" required />
+        
+        </div>
+        <p></p>
+                </form>
+                <div id="mensaje-compra" class="mensaje-compra">
+                    ¡Compra realizada con éxito!
+                </div>
+
+            <button type="submit"  class="button bshop" onclick="fValidarTarjeta()">Finalizar compra</button>
+            </div>
+          </div>
+        </div>
+      
+    
+
+    <footer>
+        <ul>
+            <li>Profesor Fabrizio Carlassara</li>
+            <li>
+                <a href="mailto:fabrizio.carlassara@davinci.edu.ar?subject=P1%20-%20Consulta%20-%20DW2[M|T|N][A|B]%20-%20Apellido,%20Nombre" target="_blank">fabrizio.carlassara@davinci.edu.ar</a>
+            </li>
+            <li>Programación 1</li>
+        </ul>
+    </footer>
+</body>
+</html>

@@ -37,13 +37,15 @@ body {
 header {
   display: flex;
   position: fixed;
+  top: 0;
+  left: 0;
   z-index: 10;
   width: 100vw;
   background-color: rgba(84, 0, 0, 1);
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2em;
+  padding: 10px;
   box-shadow: 11px 11px 36px #370000;
 }
 
@@ -157,9 +159,21 @@ footer ul li a {
       list-style: none;
   }
 
+  #sobreNosotros{
+    justify-content: center;
+    max-width: 90vw;
+    margin-top: 120px;
+  }
+
+  .sobreNosotros{
+    text-align: center;
+    line-height: 2rem;
+  }
+
+
   #encabezado {
-      margin-top: 150px;
       font-size: 40px;
+      padding: 20px;
   }
   .submenu {
       position: relative;
@@ -458,3 +472,173 @@ footer ul li a {
     overflow: auto; 
   }
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.mainscreen{
+  margin-top: 200px;
+}
+
+.cardShop {
+	width: 60rem;
+    margin: auto;
+    background: white;
+    position:center;
+    align-self: center;
+    top: 50rem;
+    border-radius: 1.5rem;
+    box-shadow: 4px 3px 20px #3535358c;
+    display:flex;
+    flex-direction: row;
+    
+}
+
+.leftside {
+	background: #DFCCBB;
+	width: 25rem;
+	display: inline-flex;
+    align-items: center;
+    justify-content: center;
+	border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+
+.product {
+    object-fit: cover;
+	width: 20em;
+    height: 20em;
+    border-radius: 100%;
+}
+
+.rightside {
+    background-color: #540000;
+	width: 35rem;
+	border-bottom-right-radius: 1.5rem;
+    border-top-right-radius: 1.5rem;
+    padding: 1rem 2rem 3rem 3rem;
+}
+
+p, .labelShop{
+    display:block;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin: .8rem 0;
+}
+
+.inputbox
+{
+    color:#030303;
+	width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-bottom: 1.5px solid #DFCCBB;
+    margin-bottom: 1rem;
+    border-radius: 0.3rem;
+    font-family: 'Roboto', sans-serif;
+    color: #615a5a;
+    font-size: 1.1rem;
+    font-weight: 500;
+  outline:none;
+}
+
+.expcvv {
+    display:flex;
+    justify-content: space-between;
+    padding-top: 0.6rem;
+}
+
+.expcvv_text{
+    padding-right: 1rem;
+}
+.expcvv_text2{
+    padding:0 1rem;
+}
+
+@media only screen and (max-width: 1000px) {
+    .card{
+        flex-direction: column;
+        width: auto;
+      
+    }
+
+    .leftside{
+        width: 100%;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 0;
+      border-top-right-radius:0;
+      border-radius:0;
+    }
+
+    .rightside{
+        width:auto;
+        border-bottom-left-radius: 1.5rem;
+        padding:0.5rem 3rem 3rem 2rem;
+      border-radius:0;
+    }
+}
+
+
+.bshop{
+  margin: auto;
+}
+
+
+  .mensaje-compra {
+    display: none;
+    text-align: center;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+  }
+
+
+
+
+
+  /* Estilos para el menú dropdown */
+.filtros {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.filtro-label {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.filtro-select {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #540000;
+  color: #DFCCBB;
+  transition: border-color 0.3s ease;
+}
+
+
+.filtro-select:focus {
+  outline: none;
+  border-color: #6e8cd5;
+}
+
+/* Otros estilos de tu página de vinos */
+/* ... */
+

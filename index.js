@@ -723,3 +723,75 @@ carritoIcono.addEventListener('click', () => {
   carritoElement.style.display = carritoElement.style.display === 'none' ? 'block' : 'none';
 });
 
+
+
+
+
+window.onload = function() {
+    const form = document.querySelector('form');
+    const mensajeCompra = document.getElementById('mensaje-compra');
+    
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // Evita el envío del formulario
+      
+      // Aquí puedes realizar validaciones del formulario si es necesario
+      
+      // Mostrar el mensaje de compra realizada
+      mensajeCompra.style.display = 'flex';
+    });
+  };
+
+
+
+
+
+
+
+
+
+
+
+  function fValidarTarjeta(){
+    var opt = $("#lstTipoTarjeta option:selected").val();
+    codigo = $("#nro_tarjeta").val().replace('-', '');
+    var msg = "Valor incorrecto";
+    VISA = /^4[0-9]{3}-?[0-9]{4}-?[0-9]{4}-?[0-9]{4}$/;
+    MASTERCARD = /^5[1-5][0-9]{2}-?[0-9]{4}-?[0-9]{4}-?[0-9]   {4}$/;
+    AMEX = /^3[47][0-9-]{16}$/;
+    CABAL = /^(6042|6043|6044|6045|6046|5896){4}[0-9]{12}$/;
+    NARANJA =   /^(589562|402917|402918|527571|527572|0377798|0377799)[0-9]*$/;
+
+    $("#err_nro_tarjeta").html("");
+    if(luhn(codigo)){
+        if(opt == "VISA" && !codigo.match(VISA)){
+            alert(msg);
+        }
+        if(opt == "MASTERCARD" && !codigo.match(MASTERCARD)){
+            alert(msg);
+        }
+        if(opt == "NARANJA" && !codigo.match(NARANJA)){
+            alert(msg);
+        }
+        if(opt == "CABAL" && !codigo.match(CABAL)){
+            alert(msg);
+        }
+        if(opt == "AMEX" && !codigo.match(AMEX)){
+            alert(msg);
+        }
+    } else {
+        alert(msg);
+    }
+}
+function luhn(value) {
+    // Accept only digits, dashes or spaces
+    if (/[^0-9-\s]+/.test(value)) return false;
+    // The Luhn Algorithm. It's so pretty.
+    let nCheck = 0, bEven = false;
+    value = value.replace(/\D/g, "");
+    for (var n = value.length - 1; n >= 0; n--) {
+        var cDigit = value.charAt(n),
+        nDigit = parseInt(cDigit, 10);
+        if (bEven && (nDigit *= 2) > 9) nDigit -= 9; nCheck +=  nDigit; bEven = !bEven;
+    }
+    return (nCheck % 10) == 0;
+}

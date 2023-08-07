@@ -31,16 +31,18 @@
                 <div class="row">
 
                     <div class="four columns">
-                      <img class="logo" src="img/Logo.png" alt="Logo">
+                      <a href="index.html">
+                        <img class="logo" src="img/Logo.png" alt="Logo">
+                      </a>
                     </div>
 
                     <nav class="navbar">
                         <ul>
-                            <li><a href="">Sobre Nosotros</a></li>
-                            <li><a href="">Tipos de vinos</a></li>
-                            <li><a href="">Maridaje</a></li>
-                            <li><a href="">Comprar</a></li>
-                            <li><a href="">Contacto</a></li>
+                            <li><a href="#sobreNosotros">Sobre Nosotros</a></li>
+                            <li><a href="#NuestrossVinos">Nuestros vinos</a></li>
+                            <li><a href="#maridaje">Maridaje</a></li>
+                            <li><a href="compra.html">Comprar</a></li>
+                            <li><a href="#contacto">Contacto</a></li>
                         </ul>
                     </nav>
 
@@ -65,7 +67,9 @@
                                   <tbody></tbody>
                                 </table>
                                 <a href="#" id="vaciar-carrito" class="button u-full-width">Vaciar Carrito</a>
-                              </div>
+                                    <!-- Agregar el botón "Comprar" -->
+                                    <a href="compra.html" class="button u-full-width">Comprar</a>
+                                </div>
                             </div>
                           </li>
                         </ul>
@@ -76,26 +80,36 @@
                 </div> 
             </div>
             </header>
+
+            
+            <section id="sobreNosotros" class="container">
+              <h1 id="encabezado">Sobre Nosotros</h1>
+              <p class="sobreNosotros">Don Flamingo es una empresa apasionada por los vinos rosados de alta calidad. Nuestro compromiso es ofrecer a nuestros clientes una experiencia única, desde la cuidadosa selección de uvas hasta el delicado proceso de elaboración de nuestros vinos. Nos enorgullecemos de crear vinos rosados que capturan la esencia y la elegancia de la región en la que se cultivan nuestras uvas.
+              Con una larga tradición en la industria vinícola, Don Flamingo se ha convertido en un referente para los amantes del vino que buscan un sabor fresco y vibrante en cada copa. Nuestro equipo de enólogos y expertos está dedicado a llevar la excelencia a cada botella, lo que nos permite ofrecer una experiencia inigualable a los paladares más exigentes.
+              Descubre la pasión y el sabor detrás de cada botella de Don Flamingo y únete a nosotros en este viaje a través de los sabores únicos de los vinos rosados de alta gama.</p>
+            </section>
         
+            <section id="NuestrossVinos">
             <div id="lista-cursos" class="container">
                 <h1 id="encabezado" class="encabezado">Vinos</h1>
 
                 <div class="containerProduct">
-                    <div class="filtros">
-                        <label for="filtroCategorias">Filtrar</label>
-                        <select id="filtroCategorias">
-                            <option value="Todos">Todos</option>
-                            <option value="Tinto">Tintos</option>
-                            <option value="Blanco">Blancos</option>
-                            <option value="Rosado">Rosados</option>
-                            <option value="Espumoso">Espumosos</option>
-                        </select>
-                    </div>
-                    <div id="slideContainer">
-                    </div>
-                </div>
-
-
+                  <div class="filtros">
+                      <label for="filtroCategorias" class="filtro-label">Filtrar</label>
+                      <select id="filtroCategorias" class="filtro-select">
+                          <option class="option" value="Todos">Todos</option>
+                          <option class="option" value="Tinto">Tintos</option>
+                          <option class="option" value="Blanco">Blancos</option>
+                          <option class="option" value="Rosado">Rosados</option>
+                          <option class="option" value="Espumoso">Espumosos</option>
+                      </select>
+                  </div>
+                  <div id="slideContainer">
+                  </div>
+              </div>
+              
+            </div>
+          </section>
 
         </main>
         <footer>
@@ -108,8 +122,6 @@
             </ul>
         </footer>
         <script src="index.js"></script>
-        <script>
-        </script>
           
     </body>
 </html>
