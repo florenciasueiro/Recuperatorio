@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-BDzFvYZDd3fuTn0B1d9EDcx6zhrC/N31AAm0u9TGhXkySDU7IVfZEYSDwQ4Uy5rO" crossorigin="anonymous">
+    <script src="index.js"></script>
 
 </head>
 <body>
@@ -27,7 +28,6 @@
                         <li><a href="">Sobre Nosotros</a></li>
                         <li><a href="">Tipos de vinos</a></li>
                         <li><a href="">Maridaje</a></li>
-                        <li><a href="">Comprar</a></li>
                         <li><a href="">Contacto</a></li>
                     </ul>
                 </nav>
@@ -51,10 +51,10 @@
                                         </thead>
                                         <tbody></tbody>
                                     </table>
-                                    <a href="#" id="vaciar-carrito" class="buttonShop u-full-width">Vaciar Carrito</a>
+                                    <button id="vaciar-carrito" class="buttonShop u-full-width">Vaciar Carrito</button>
 
                                     <!-- Agregar el botón "Comprar" -->
-                                    <a href="compra.html" id="comprar-btn" class="buttonShop u-full-width">Comprar</a>
+                                    <button id="comprar-btn" class="buttonShop u-full-width" onclick="console()">Comprar</button>
                                 </div>
                             </div>
                         </li>
@@ -66,26 +66,24 @@
 
 
     <div class="mainscreen">
-          <div class="cardShop">
             <div class="leftside">
-                <div>
-                    <div id="carrito">
-                        <div class="carrito-container">
-                          <table id="lista-carrito" class="u-full-width">
-                            <thead>
-                              <tr>
-                                <th>Imagen</th>
-                                <th>Nombre</th>
-                                <th>Precio</th>
-                                <th>Cant</th>
-                                <th><p id="precio-total">Total: $0.00</p></th>
-                                <th></th>
-                              </tr>
-                            </thead>
-                            <tbody></tbody>
-                          </table>
-                          </div>
-                      </div>
+
+                <div id="compra"></div>
+
+                <div id="carrito-info-container">
+                    <table id="lista-carrito" class="u-full-width">
+                        <thead>
+                          <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Cant</th>
+                            <th><p id="precio-total">Total: $0.00</p></th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
                 </div>
             </div>
             <div class="rightside">

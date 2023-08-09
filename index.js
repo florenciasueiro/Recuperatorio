@@ -3,6 +3,7 @@
  *  Sueiro
  */
 
+
 class Producto {
     constructor(id, nombre, descripcion, precio, imagen, categoria) {
       this.id = id;
@@ -404,7 +405,6 @@ class Producto {
 
 let total = 0;
 
-
 function generarCards() {
     const containerId = 'slideContainer';
     const container = document.getElementById(containerId);
@@ -497,9 +497,12 @@ function generarCards() {
     });
   }
   const filtroCategorias = document.getElementById('filtroCategorias');
-  filtroCategorias.addEventListener('change', generarCards);
+  if (filtroCategorias){
+      
+      filtroCategorias.addEventListener('change', generarCards);
+      generarCards();
+  }
   
-  generarCards();
   
   
   
@@ -511,15 +514,7 @@ function generarCards() {
 
 
 
-$(document).ready(function() {
-    $('.slideHorizontal').slick({
-      arrows: true,
-      prevArrow: '<button type="button" class="slick-prev"><i class="fas fa-chevron-left"></i></button>',
-      nextArrow: '<button type="button" class="slick-next"><i class="fas fa-chevron-right"></i></button>',
-      slidesToShow: 3,
-      slidesToScroll: 1
-    });
-  });
+
   
   const agregarCarritoButtons = document.querySelectorAll('.agregar-carrito');
   
@@ -546,17 +541,23 @@ const vaciarCarritoBtn = document.querySelector('#vaciar-carrito');
 
 eventslisteners();
 
-function eventslisteners() 
+async function eventslisteners() 
 {
-    cursos.addEventListener('click', comprarCurso);
+    await leerLS();
 
-    carritoid.addEventListener('click', eliminarCurso);
+    if (cursos) {cursos.addEventListener('click', comprarCurso);}
 
-    vaciarCarritoBtn.addEventListener('click', vaciarcarrito);
+    if (carritoid) {carritoid.addEventListener('click', eliminarCurso);}
 
-    document.addEventListener('DOMContentLoaded', leerLS)
+    if (vaciarCarritoBtn) {vaciarCarritoBtn.addEventListener('click', vaciarcarrito);}
 
-}
+    if (filtroCategorias) {
+        filtroCategorias.addEventListener('change', generarCards);
+        generarCards();
+    }
+
+        document.addEventListener('DOMContentLoaded', await leerLS);
+    }
 
 let contador = 0;
 
@@ -586,7 +587,7 @@ function leerDatosCurso(curso) {
 
 
 
-function insertarCurso(curso) {
+async function insertarCurso(curso) {
     const precio = parseFloat(curso.precio.substring(1));
     const subtotal = precio * curso.cantidad;
     total += subtotal;
@@ -600,10 +601,14 @@ function insertarCurso(curso) {
       `);
     listaCursos.appendChild(row);
     guardarCursoLocalStorage(curso);
+    console.log('desde insertar',listaCursos)
+    localStorage.setItem('lstest', JSON.stringify(listaCursos)); 
+    const cursostest = localStorage.getItem('lstest');
+    console.log('desde test',await cursostest);
+
     document.getElementById('precio-total').textContent = `$${total.toFixed(2)}`;
   }
-  
-  
+
 
 function eliminarCurso(e) {
     e.preventDefault();
@@ -635,15 +640,11 @@ function eliminarCurso(e) {
 
 
 
-function guardarCursoLocalStorage(curso)
-{
-    let cursos;
-    cursos = obtenerCursosLocalStorage();
-
+  function guardarCursoLocalStorage(curso) {
+    let cursos = obtenerCursosLocalStorage();
     cursos.push(curso);
     localStorage.setItem('cursos', JSON.stringify(cursos));
 }
-
 
 
 function obtenerCursosLocalStorage() 
@@ -659,24 +660,20 @@ function obtenerCursosLocalStorage()
 }
 
 
-function leerLS() {
-    let cursosLS;
-  
-    cursosLS = obtenerCursosLocalStorage();
-  
-    cursosLS.forEach(function(curso) {
-    
-      const row = document.createElement("tr");
-      row.insertAdjacentHTML("beforeend", `
-        <td><img src="${curso.imagen}" width="100"></td>
-        <td>${curso.titulo}</td>
-        <td>${curso.precio}</td>
-        <td><a href="#" class="borrar-curso" data-id="${curso.id}">X</a></td>
-      `);
-      listaCursos.appendChild(row);
+async function leerLS() {
+    let cursosLS = obtenerCursosLocalStorage();
+
+    cursosLS.forEach(function (curso) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td><img src="${curso.imagen}" width="100"></td>
+            <td>${curso.titulo}</td>
+            <td>${curso.precio}</td>
+            <td><a href="#" class="borrar-curso" data-id="${curso.id}">X</a></td>
+        `;
+        listaCursos.appendChild(row);
     });
-  }
-  
+}
 
 
 function eliminarCursoLS(curso) {
@@ -718,28 +715,28 @@ function vaciarcarrito() {
 const carritoElement = document.getElementById('carrito');
 const carritoIcono = document.getElementById('carrito-icono');
 
-
+ if (carritoIcono) {
 carritoIcono.addEventListener('click', () => {
   carritoElement.style.display = carritoElement.style.display === 'none' ? 'block' : 'none';
 });
+ }
 
 
 
 
-
-window.onload = function() {
-    const form = document.querySelector('form');
-    const mensajeCompra = document.getElementById('mensaje-compra');
+// window.onload = function() {
+//     const form = document.querySelector('form');
+//     const mensajeCompra = document.getElementById('mensaje-compra');
     
-    form.addEventListener('submit', function(event) {
-      event.preventDefault(); // Evita el envío del formulario
+//     form.addEventListener('submit', function(event) {
+//       event.preventDefault(); // Evita el envío del formulario
       
-      // Aquí puedes realizar validaciones del formulario si es necesario
+//       // Aquí puedes realizar validaciones del formulario si es necesario
       
-      // Mostrar el mensaje de compra realizada
-      mensajeCompra.style.display = 'flex';
-    });
-  };
+//       // Mostrar el mensaje de compra realizada
+//       mensajeCompra.style.display = 'flex';
+//     });
+//   };
 
 
 
@@ -795,3 +792,22 @@ function luhn(value) {
     }
     return (nCheck % 10) == 0;
 }
+
+
+
+// Obtén el botón de Comprar y agrega un evento click
+// Modifica el evento btnComprar.addEventListener en index.js
+// Declaración de la variable btnComprar
+const btnComprar = document.getElementById('comprar-btn');
+
+// Evento click en el botón de compra
+btnComprar.addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    // Resto del código para manejar la compra
+    // Guarda los cursos en el Local Storage para que estén disponibles en compra.html
+    localStorage.setItem('cursosCompra', JSON.stringify(obtenerCursosLocalStorage()));
+    
+    window.location.href = 'compra.html';
+});
+

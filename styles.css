@@ -436,7 +436,7 @@ footer ul li a {
     background: #DFCCBB;
     color: #540000;
     font-weight: 600;
-    font-size: 1.5rem;
+    font-size: 1rem;
     padding: 0px 5px;
     /* height: 12px; */
     /* width: 12px; */
@@ -491,6 +491,8 @@ footer ul li a {
 
 .mainscreen{
   margin-top: 200px;
+  display: flex;
+  justify-content: center;
 }
 
 .cardShop {
@@ -616,11 +618,13 @@ p, .labelShop{
   align-items: center;
   margin-bottom: 20px;
   justify-content: center;
+  text-align: center;
 }
 
 .filtro-label {
   font-size: 18px;
   margin-right: 10px;
+  text-align: center;
 }
 
 .filtro-select {
