@@ -542,6 +542,7 @@ const carritoid = document.getElementById('carrito');
 const cursos = document.getElementById('lista-cursos');
 const listaCursos = document.querySelector('#lista-carrito tbody')
 const vaciarCarritoBtn = document.querySelector('#vaciar-carrito');
+const vaciarCarritoBtn2 = document.querySelector('#vaciar-carrito2');
 
 function eventslisteners() {
     
@@ -551,6 +552,21 @@ function eventslisteners() {
     if (carritoid) {carritoid.addEventListener('click', eliminarCurso);}
 
     if (vaciarCarritoBtn) {vaciarCarritoBtn.addEventListener('click', vaciarcarrito);}
+    if (vaciarCarritoBtn2) {vaciarCarritoBtn2.addEventListener('click', () =>{
+        while (listaCursos.firstChild) {
+            listaCursos.removeChild(listaCursos.firstChild);
+          }
+        
+      
+          vaciarLs();
+        
+          contador = 0;
+          document.getElementById('contador-carrito').textContent = contador;
+          total = 0;
+          document.getElementById('precio-total').textContent = '$0.00';
+        
+          return false;
+    });}
 
     if (filtroCategorias) {
         filtroCategorias.addEventListener('change', generarCards);
@@ -830,5 +846,44 @@ btnComprar.addEventListener('click', function(event) {
 
 
 
-// Función para obtener la cantidad de productos en el carrito desde el localStorage
 
+document.getElementById('form-compra').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    console.log('Compra procesada');
+
+});
+
+document.getElementById('form-pago').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+
+    let numeroTarjeta = document.getElementById('nro_tarjeta').value;
+    if (luhn(numeroTarjeta)) {
+
+        console.log('Número de tarjeta válido');
+
+        console.log('Pago procesado');
+
+    } else {
+        console.log('Número de tarjeta inválido');
+        alert('El número de tarjeta de crédito es inválido');
+    }
+});
+
+
+
+document.getElementById('form-compra').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    let nombre = document.getElementById('nombre').value;
+    let correo = document.getElementById('correo').value;
+    let direccion = document.getElementById('direccion').value;
+
+    if (nombre.trim() === '' || correo.trim() === '' || direccion.trim() === '') {
+        alert('Por favor completa todos los campos antes de finalizar la compra');
+        return;
+    }
+
+    window.location.href = 'index.html';
+
+    alert('¡Compra realizada con éxito!');
+});

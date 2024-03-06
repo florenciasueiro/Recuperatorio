@@ -664,5 +664,12 @@ p, .labelShop{
   /* display: none; */
 }
 
-
+.buttonShop{
+  color: #DFCCBB;
+  background-color: #4c0000;
+  box-shadow: none;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
 

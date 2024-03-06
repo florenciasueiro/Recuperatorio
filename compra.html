@@ -1,19 +1,25 @@
 <!doctype html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <title>Compra - Programación I | Parcial 2 | Sueiro</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="https://kit.fontawesome.com/231d7a05ce.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <head>
+        <meta charset="utf-8" />
+        <title>Programación I | Parcial 2 | Sueiro</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
+        <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="stylesheet" href="styles.css" />
+        <script src="https://kit.fontawesome.com/231d7a05ce.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-BDzFvYZDd3fuTn0B1d9EDcx6zhrC/N31AAm0u9TGhXkySDU7IVfZEYSDwQ4Uy5rO" crossorigin="anonymous">
+    
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-BDzFvYZDd3fuTn0B1d9EDcx6zhrC/N31AAm0u9TGhXkySDU7IVfZEYSDwQ4Uy5rO" crossorigin="anonymous">
-    <script src="index.js"></script>
-
-</head>
+    
+    
+    </head>
 <body>
     <header id="header" class="header">
         <div class="container">
@@ -70,58 +76,64 @@
 
                 <div id="compra"></div>
 
-                <div id="carrito-info-container">
-                    <table id="lista-carrito" class="u-full-width">
-                        <thead>
-                          <tr>
-                            <th>Imagen</th>
-                            <th>Nombre</th>
-                            <th>Precio</th>
-                            <th>Cant</th>
-                            <th><p id="precio-total">Total: $0.00</p></th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody></tbody>
-                      </table>
+                <div id="carrito" ">
+                    <div class="carrito-container">
+                        <table id="lista-carrito" class="u-full-width">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Precio</th>
+                                    <th>Cant</th>
+                                    <th><p id="precio-total">Total: $0.00</p></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <button id="vaciar-carrito" class="buttonShop u-full-width">Vaciar Carrito</button>
+
+                        <!-- Agregar el botón "Comprar" -->
+                        <button id="comprar-btn" class="buttonShop u-full-width" onclick="console()">Comprar</button>
+                    </div>
                 </div>
             </div>
             <div class="rightside">
-              <form action="">
-                <h2>Información de pago</h2>
-                <p>Nombre como figura en la tarjeta</p>
-                <input type="text" class="inputbox" name="name" required />
-
-<label class="labelShop" for="lstTipoTarjeta">Tipo de Tarjeta</label>
-    <select id="lstTipoTarjeta">
-        <option value="VISA">VISA</option>
-        <option value="MASTERCARD">Mastercard</option>
-        <option value="AMEX">AMEX</option>
-        <option value="CABAL">Cabal</option>
-        <option value="NARANJA">Naranja</option>
-    </select>
-    
-    <label class="labelShop" for="nro_tarjeta">Número de Tarjeta</label>
-    <input type="text" class="inputbox" id="nro_tarjeta" />
-    <span id="err_nro_tarjeta"></span>
-    
-    <div class="expcvv">
-        
-        <p class="expcvv_text">Fecha de vencimiento</p>
-        <input type="month" class="inputbox" name="exp_date" id="exp_date" required />
-        
-        <p class="expcvv_text2">CVV</p>
-        <input type="text" class="inputbox" name="cvv" id="cvv" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.slice(0, 3);" required />
-        
-        </div>
-        <p></p>
+                <form action="#" id="form-compra">
+                            <h2>Información de Envío</h2>
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="inputbox" id="nombre" name="nombre" required />
+                    
+                            <label for="correo">Correo Electrónico</label>
+                            <input type="email" class="inputbox" id="correo" name="correo" required />
+                    
+                            <label for="direccion">Dirección de Envío</label>
+                            <textarea id="direccion" class="inputbox" name="direccion" rows="1" required></textarea>
+            
+                    <label for="lstTipoTarjeta">Tipo de Tarjeta</label>
+                    <select id="lstTipoTarjeta">
+                        <option value="VISA">VISA</option>
+                        <option value="MASTERCARD">Mastercard</option>
+                        <option value="AMEX">AMEX</option>
+                        <option value="CABAL">Cabal</option>
+                        <option value="NARANJA">Naranja</option>
+                    </select>
+            
+                    <label for="nro_tarjeta">Número de Tarjeta</label>
+                    <input type="text" class="inputbox" id="nro_tarjeta" />
+            
+                    <div class="expcvv">
+                        <label for="exp_date">Fecha de Vencimiento</label>
+                        <input type="month" class="inputbox" id="exp_date" name="exp_date" required />
+            
+                        <label for="cvv">CVV</label>
+                        <input type="text" class="inputbox" id="cvv" name="cvv" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.slice(0, 3);" required />
+                    </div>
+            
+                    <button type="submit" class="button bshop">Finalizar Compra</button>
                 </form>
-                <div id="mensaje-compra" class="mensaje-compra">
-                    ¡Compra realizada con éxito!
-                </div>
-
-            <button type="submit"  class="button bshop" onclick="fValidarTarjeta()">Finalizar compra</button>
             </div>
+            
           </div>
         </div>
       
@@ -136,5 +148,7 @@
             <li>Programación 1</li>
         </ul>
     </footer>
+
+    <script src="index.js"></script>
 </body>
 </html>
