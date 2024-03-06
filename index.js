@@ -4,6 +4,9 @@
  */
 
 
+
+
+
 class Producto {
     constructor(id, nombre, descripcion, precio, imagen, categoria) {
       this.id = id;
@@ -405,6 +408,8 @@ class Producto {
 
 let total = 0;
 
+
+
 function generarCards() {
     const containerId = 'slideContainer';
     const container = document.getElementById(containerId);
@@ -414,6 +419,7 @@ function generarCards() {
     const categoriaSeleccionada = filtroCategorias.value;
     const productosFiltrados = categoriaSeleccionada === 'Todos' ? productos : productos.map(producto => {
         if (producto.categoria === categoriaSeleccionada) {
+
           return producto;
         }
       });
@@ -497,24 +503,23 @@ function generarCards() {
     });
   }
   const filtroCategorias = document.getElementById('filtroCategorias');
+
+  let ofertaEspecial = document.getElementById('ofertaespecialbanner');
+  
+  function mostrarOfertaEspecial() {
+      ofertaEspecial.classList.add('mostrar');
+      setTimeout(() => {
+          ofertaEspecial.classList.remove('mostrar');
+      }, 1000);
+  }
+
   if (filtroCategorias){
-      
       filtroCategorias.addEventListener('change', generarCards);
       generarCards();
+      mostrarOfertaEspecial();
+
   }
   
-  
-  
-  
-  
-  
-  
-  
-
-
-
-
-
   
   const agregarCarritoButtons = document.querySelectorAll('.agregar-carrito');
   
@@ -810,4 +815,7 @@ btnComprar.addEventListener('click', function(event) {
     
     window.location.href = 'compra.html';
 });
+
+
+
 

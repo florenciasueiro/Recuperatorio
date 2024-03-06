@@ -646,3 +646,23 @@ p, .labelShop{
 /* Otros estilos de tu página de vinos */
 /* ... */
 
+.mostrar {
+  display: block;
+}
+
+#ofertaespecialbanner {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: red;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  z-index: 1000;
+  display: none;
+}
+
+
+
