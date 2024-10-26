@@ -402,45 +402,45 @@ class Producto {
 ];
 
 
-let total = 0; // Ejemplo de total inicial (ajústalo al total real del carrito)
+let total = 0;
 
-// Función para mostrar la oferta especial
 function mostrarOfertaEspecial() {
-    const ofertaEspecial = document.getElementById('ofertaespecialbanner');
-    ofertaEspecial.style.display = 'block'; // Muestra el banner
+    const ofertaEspecialElements = document.querySelectorAll('#ofertaespecialbanner');
+    ofertaEspecialElements.forEach((element) => {
+        element.style.display = 'block';
+    });
 
     setTimeout(() => {
-        ofertaEspecial.style.display = 'none'; // Oculta el banner después de 10 segundos
-    }, 1000);
+        ofertaEspecialElements.forEach((element) => {
+            element.style.display = 'none';
+        });
+    }, 1000); // Después cambir a 10000 ms para 10 segundos
 }
 
-// Función para aplicar el descuento
+
 function aplicarDescuento() {
-    const descuento = 0.10; // 10% de descuento
+    const descuento = 0.10;
     const descuentoAplicado = total * descuento;
-    total -= descuentoAplicado; // Actualiza el total
+    total -= descuentoAplicado;
     document.querySelectorAll('#precio-total').forEach((elemento) => {
         elemento.textContent = `$${total.toFixed(2)}`;
     });
-     // Muestra el total con el descuento
-    
-    // Guarda el nuevo total en Local Storage
+
     guardarPrecioTotalEnLocalStorage(total);
     
-    // Desactiva el botón para evitar aplicar el descuento más de una vez
     document.querySelectorAll('aplicarDescuentoBtn').disabled = true;
 }
 
 
-// Al cargar el DOM, se configura el botón de descuento
 document.addEventListener('DOMContentLoaded', () => {
-    const aplicarDescuentoBtn = document.getElementById('aplicarDescuentoBtn');
-    if (aplicarDescuentoBtn) {
-        aplicarDescuentoBtn.addEventListener('click', aplicarDescuento);
-    }
-    
-    mostrarOfertaEspecial(); // Muestra la oferta especial al cargar la página
+    const aplicarDescuentoBtns = document.querySelectorAll('#aplicarDescuentoBtn');
+    aplicarDescuentoBtns.forEach((btn) => {
+        btn.addEventListener('click', aplicarDescuento);
+    });
+
+    mostrarOfertaEspecial();
 });
+
 
 
 function generarCards() {
@@ -532,14 +532,13 @@ function generarCards() {
     });
   }
 
-  
-// Filtro de categorías
+
 const filtroCategorias = document.getElementById('filtroCategorias');
 if (filtroCategorias) {
     filtroCategorias.addEventListener('change', () => {
         generarCards();
     });
-    generarCards(); // Generar las tarjetas inicialmente
+    generarCards();
 }
   
   const agregarCarritoButtons = document.querySelectorAll('.agregar-carrito');
@@ -555,52 +554,60 @@ if (filtroCategorias) {
   });
   
 
-const carritoid = document.getElementById('carrito');
-const cursos = document.getElementById('lista-cursos');
-const listaCursos = document.querySelector('#lista-carrito tbody')
-const vaciarCarritoBtn = document.querySelector('#vaciar-carrito');
-const vaciarCarritoBtn2 = document.querySelector('#vaciar-carrito2');
+  const carritoid = document.querySelectorAll('#carrito')[0];
+  const cursos = document.querySelectorAll('#lista-cursos')[0];
+  const listaCursos = document.querySelector('#lista-carrito tbody');
+  const vaciarCarritoBtn = document.querySelector('#vaciar-carrito');
+  const vaciarCarritoBtn2 = document.querySelector('#vaciar-carrito2');
+  
+  function eventslisteners() {
+      if (cursos) {
+          cursos.addEventListener('click', comprarCurso);
+      }
+  
+      if (carritoid) {
+          carritoid.addEventListener('click', eliminarCurso);
+      }
+  
+      if (vaciarCarritoBtn) {
+          vaciarCarritoBtn.addEventListener('click', vaciarcarrito);
+      }
+  
+      if (vaciarCarritoBtn2) {
+          vaciarCarritoBtn2.addEventListener('click', () => {
+              while (listaCursos.firstChild) {
+                  listaCursos.removeChild(listaCursos.firstChild);
+              }
+              vaciarLs();
+              contador = 0;
+              document.querySelector('#contador-carrito').textContent = contador;
+              total = 0;
+              document.querySelectorAll('#precio-total').forEach((elemento) => {
+                  elemento.textContent = `$0.00`;
+              });
+  
+              return false;
+          });
+      }
+  
+      if (filtroCategorias) {
+          filtroCategorias.addEventListener('change', generarCards);
+          generarCards();
+      }
+  
+      document.addEventListener('DOMContentLoaded', leerLS);
+  }
+  eventslisteners();
+  
 
-function eventslisteners() {
-
-    if (cursos) {cursos.addEventListener('click', comprarCurso);}
-
-    if (carritoid) {carritoid.addEventListener('click', eliminarCurso);}
-
-    if (vaciarCarritoBtn) {vaciarCarritoBtn.addEventListener('click', vaciarcarrito);}
-    if (vaciarCarritoBtn2) {vaciarCarritoBtn2.addEventListener('click', () =>{
-        while (listaCursos.firstChild) {
-            listaCursos.removeChild(listaCursos.firstChild);
-          }
-          vaciarLs();
-          contador = 0;
-          document.getElementById('contador-carrito').textContent = contador;
-          total = 0;
-          document.querySelectorAll('#precio-total').forEach((elemento) => {
-    elemento.textContent = `$0.00`;
-});
-
-          return false;
-    });}
-
-    if (filtroCategorias) {
-        filtroCategorias.addEventListener('change', generarCards);
-        generarCards();
-    }
-
-        document.addEventListener('DOMContentLoaded', leerLS);
-    }
-eventslisteners();
-
-// Obtener y guardar la cantidad en el Local Storage
 function obtenerCantidadEnCarritoDesdeLocalStorage() {
     const cantidadEnCarrito = localStorage.getItem('cantidadEnCarrito');
-    return cantidadEnCarrito ? parseInt(cantidadEnCarrito) : 0; // Si no hay, retorna 0
+    return cantidadEnCarrito ? parseInt(cantidadEnCarrito) : 0;
 }
 
 function obtenerPrecioTotalDesdeLocalStorage() {
     const precioTotal = localStorage.getItem('precioTotal');
-    return precioTotal ? parseFloat(precioTotal) : 0; // Retorna 0 si no hay
+    return precioTotal ? parseFloat(precioTotal) : 0;
 }
 
 function guardarCantidadEnCarritoEnLocalStorage(cantidad) {
@@ -611,21 +618,17 @@ function guardarPrecioTotalEnLocalStorage(precio) {
     localStorage.setItem('precioTotal', precio.toString());
 }
 
-// Cargar datos desde el Local Storage al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
-    // Recuperar la cantidad en el carrito
     const cantidadEnCarrito = obtenerCantidadEnCarritoDesdeLocalStorage();
     document.getElementById('contador-carrito').textContent = cantidadEnCarrito;
 
-    // Recuperar y mostrar el total en el carrito
-    total = obtenerPrecioTotalDesdeLocalStorage(); // Cargar el total guardado
+    total = obtenerPrecioTotalDesdeLocalStorage();
     document.querySelectorAll('#precio-total').forEach((elemento) => {
         elemento.textContent = `$${total.toFixed(2)}`;
     });
     
 });
 
-// Vaciar Local Storage
 function vaciarLs() {
     localStorage.clear();
 }
@@ -650,22 +653,22 @@ function vaciarLs() {
 
 function vaciarcarrito() {
     while (listaCursos.firstChild) {
-      listaCursos.removeChild(listaCursos.firstChild);
+        listaCursos.removeChild(listaCursos.firstChild);
     }
-  
 
     vaciarLs();
-  
+
     contador = 0;
-    document.getElementById('contador-carrito').textContent = contador;
+    document.querySelector('#contador-carrito').textContent = contador;
+
     total = 0;
     document.querySelectorAll('#precio-total').forEach((elemento) => {
         elemento.textContent = `$0.00`;
     });
-    
-  
+
     return false;
-  }
+}
+
 
 
 let contador = 0;
@@ -676,12 +679,11 @@ function comprarCurso(e) {
         const curso = e.target.parentElement.parentElement;
         leerDatosCurso(curso);
         let cantidadEnCarrito = obtenerCantidadEnCarritoDesdeLocalStorage();
-        cantidadEnCarrito++
-        guardarCantidadEnCarritoEnLocalStorage(cantidadEnCarrito); // Guarda la cantidad en el localStorage
-        document.getElementById('contador-carrito').textContent = cantidadEnCarrito; // Actualiza el contador del carrito
+        cantidadEnCarrito++;
+        guardarCantidadEnCarritoEnLocalStorage(cantidadEnCarrito);
+        document.querySelector('#contador-carrito').textContent = cantidadEnCarrito;
     }
 }
-
 
 function leerDatosCurso(curso) {
     const infoCurso = {
@@ -710,12 +712,11 @@ function leerDatosCurso(curso) {
     guardarCursoLocalStorage(curso);
     console.log('desde insertar', listaCursos);
 
-    // Actualiza el total y lo guarda en el Local Storage
     document.querySelectorAll('#precio-total').forEach((elemento) => {
         elemento.textContent = `$${total.toFixed(2)}`;
     });
     
-    guardarPrecioTotalEnLocalStorage(total); // Guarda el total en Local Storage
+    guardarPrecioTotalEnLocalStorage(total);
 }
 
 
@@ -744,9 +745,7 @@ function leerDatosCurso(curso) {
       document.querySelectorAll('#precio-total').forEach((elemento) => {
         elemento.textContent = `$${total.toFixed(2)}`;
     });
-    
-  
-      // Guarda el nuevo total en Local Storage
+
       guardarPrecioTotalEnLocalStorage(total);
   
       curso.remove();
@@ -798,24 +797,22 @@ const carritoIcono = document.getElementById('carrito-icono');
 carritoIcono.addEventListener('click', () => {
   carritoElement.style.display = carritoElement.style.display === 'none' ? 'block' : 'none';
 });
- }
+}
 
 
 function validarTipoTarjeta(opt, codigo) {
     const tarjetas = {
-      VISA: /^4[0-9]{3}-?[0-9]{4}-?[0-9]{4}-?[0-9]{4}$/,
-      MASTERCARD: /^5[1-5][0-9]{2}-?[0-9]{4}-?[0-9]{4}-?[0-9]{4}$/,
-      AMEX: /^3[47][0-9-]{16}$/,
-      CABAL: /^(6042|6043|6044|6045|6046|5896)[0-9]{12}$/,
-      NARANJA: /^(589562|402917|402918|527571|527572|0377798|0377799)[0-9]*$/
+    VISA: /^4[0-9]{3}-?[0-9]{4}-?[0-9]{4}-?[0-9]{4}$/,
+    MASTERCARD: /^5[1-5][0-9]{2}-?[0-9]{4}-?[0-9]{4}-?[0-9]{4}$/,
+    AMEX: /^3[47][0-9-]{16}$/,
+    CABAL: /^(6042|6043|6044|6045|6046|5896)[0-9]{12}$/,
+    NARANJA: /^(589562|402917|402918|527571|527572|0377798|0377799)[0-9]*$/
     };
     if (!tarjetas[opt].test(codigo)) alert("Número de tarjeta inválido para tipo seleccionado.");
-  }
+}
 
 function luhn(value) {
-    // Accept only digits, dashes or spaces
     if (/[^0-9-\s]+/.test(value)) return false;
-    // The Luhn Algorithm. It's so pretty.
     let nCheck = 0, bEven = false;
     value = value.replace(/\D/g, "");
     for (var n = value.length - 1; n >= 0; n--) {
@@ -826,17 +823,10 @@ function luhn(value) {
     return (nCheck % 10) == 0;
 }
 
-// Obtén el botón de Comprar y agrega un evento click
-// Modifica el evento btnComprar.addEventListener en index.js
-// Declaración de la variable btnComprar
 const btnComprar = document.getElementById('comprar-btn');
 
-// Evento click en el botón de compra
 btnComprar.addEventListener('click', function(event) {
     event.preventDefault();
-    
-    // Resto del código para manejar la compra
-    // Guarda los cursos en el Local Storage para que estén disponibles en compra.html
     localStorage.setItem('cursosCompra', JSON.stringify(obtenerCursosLocalStorage()));
     
     window.location.href = 'compra.html';
@@ -867,23 +857,16 @@ document.getElementById('form-pago').addEventListener('submit', function(event) 
     }
 });
 
-
-
 document.getElementById('form-compra').addEventListener('submit', function(event) {
     event.preventDefault();
-
     let nombre = document.getElementById('nombre').value;
     let correo = document.getElementById('correo').value;
     let direccion = document.getElementById('direccion').value;
-
     if (nombre.trim() === '' || correo.trim() === '' || direccion.trim() === '') {
         alert('Por favor completa todos los campos antes de finalizar la compra');
         return;
     }
-
     window.location.href = 'index.html';
-
     alert('¡Compra realizada con éxito!');
 setTimeout(() => window.location.href = 'index.html', 2000);
-
 });

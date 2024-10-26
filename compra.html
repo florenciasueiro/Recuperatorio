@@ -1,154 +1,120 @@
 <!doctype html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Programación I | Parcial 2 | Sueiro</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
-        <link rel="shortcut icon" href="favicon.ico" />
-        <link rel="stylesheet" href="styles.css" />
-        <script src="https://kit.fontawesome.com/231d7a05ce.js" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Programación I | Parcial 2 | Sueiro</title>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-BDzFvYZDd3fuTn0B1d9EDcx6zhrC/N31AAm0u9TGhXkySDU7IVfZEYSDwQ4Uy5rO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-BDzFvYZDd3fuTn0B1d9EDcx6zhrC/N31AAm0u9TGhXkySDU7IVfZEYSDwQ4Uy5rO" crossorigin="anonymous">
-    
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-
-    
-    
-    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+    <script src="https://kit.fontawesome.com/231d7a05ce.js" crossorigin="anonymous"></script>
+</head>
 <body>
-    <header id="header" class="header">
-        <div class="container">
-            <div class="row">
-                <div class="four columns">
-                    <a href="index.html">
-                        <img class="logo" src="img/Logo.png" alt="Logo">
-                    </a>
-                </div>
-                <nav class="navbar">
-                    <ul>
-                        <li><a href="">Sobre Nosotros</a></li>
-                        <li><a href="">Tipos de vinos</a></li>
-                        <li><a href="">Maridaje</a></li>
-                        <li><a href="">Contacto</a></li>
-                    </ul>
-                </nav>
-                <div class="two columns u-pull-right">
-                    <ul>
-                        <li class="submenu">
-                            <i class="fas fa-shopping-cart" id="carrito-icono"></i>
-                            <span id="contador-carrito">0</span>
-                            <div id="carrito" style="display: none;">
-                                <div class="carrito-container">
-                                    <table id="lista-carrito" class="u-full-width">
-                                        <thead>
-                                            <tr>
-                                                <th>Imagen</th>
-                                                <th>Nombre</th>
-                                                <th>Precio</th>
-                                                <th>Cant</th>
-                                                <th><p id="precio-total">Total: $0.00</p></th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                    </table>
-                                    <button id="vaciar-carrito" class="buttonShop u-full-width">Vaciar Carrito</button>
 
-                                    <!-- Agregar el botón "Comprar" -->
-                                    <button id="comprar-btn" class="buttonShop u-full-width" onclick="console()">Comprar</button>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+<header class="header">
+    <div class="container">
+        <div class="row">
+            <div class="four columns">
+                <a href="index.html">
+                    <img class="logo" src="img/Logo.png" alt="Logo">
+                </a>
+            </div>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="#sobreNosotros">Sobre Nosotros</a></li>
+                    <li><a href="#NuestrossVinos">Nuestros vinos</a></li>
+                    <li><a href="#maridaje">Maridaje</a></li>
+                    <li><a href="compra.html">Comprar</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+
+            <div id="ofertaespecialbanner" style="display: none;">
+                <p>¡Oferta Especial! ¡Compra ahora y obtén un 10% de descuento!</p>
+                <button id="toggleDescuentoBtn">Aplicar descuento</button>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<div class="mainscreen">
+    <div class="leftside">
+        <div id="compra"></div>
+        <div id="carrito" style="display: block;">
+            <div class="carrito-container">
+                <table id="lista-carrito" class="u-full-width">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Cant</th>
+                            <th><p id="precio-total">$0.00</p></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <a href="#" id="vaciar-carrito" class="button u-full-width">Vaciar Carrito</a>
+                <button id="comprar-btn" class="buttonShop u-full-width">Comprar</button>
             </div>
         </div>
-    </header>
+    </div>
 
-
-    <div class="mainscreen">
-            <div class="leftside">
-
-                <div id="compra"></div>
-
-                <div id="carrito" ">
-                    <div class="carrito-container">
-                        <table id="lista-carrito" class="u-full-width">
-                            <thead>
-                                <tr>
-                                    <th>Imagen</th>
-                                    <th>Nombre</th>
-                                    <th>Precio</th>
-                                    <th>Cant</th>
-                                    <th><p id="precio-total">Total: $0.00</p></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                        <button id="vaciar-carrito" class="buttonShop u-full-width">Vaciar Carrito</button>
-
-                        <!-- Agregar el botón "Comprar" -->
-                        <button id="comprar-btn" class="buttonShop u-full-width" onclick="console()">Comprar</button>
-                    </div>
-                </div>
-            </div>
-            <div class="rightside">
-                <form action="#" id="form-compra">
-                            <h2>Información de Envío</h2>
-                            <label for="nombre">Nombre</label>
-                            <input type="text" class="inputbox" id="nombre" name="nombre" required />
-                    
-                            <label for="correo">Correo Electrónico</label>
-                            <input type="email" class="inputbox" id="correo" name="correo" required />
-                    
-                            <label for="direccion">Dirección de Envío</label>
-                            <textarea id="direccion" class="inputbox" name="direccion" rows="1" required></textarea>
-            
-                    <label for="lstTipoTarjeta">Tipo de Tarjeta</label>
-                    <select id="lstTipoTarjeta">
-                        <option value="VISA">VISA</option>
-                        <option value="MASTERCARD">Mastercard</option>
-                        <option value="AMEX">AMEX</option>
-                        <option value="CABAL">Cabal</option>
-                        <option value="NARANJA">Naranja</option>
-                    </select>
-            
-                    <label for="nro_tarjeta">Número de Tarjeta</label>
-                    <input type="text" class="inputbox" id="nro_tarjeta" />
-            
-                    <div class="expcvv">
-                        <label for="exp_date">Fecha de Vencimiento</label>
-                        <input type="month" class="inputbox" id="exp_date" name="exp_date" required />
-            
-                        <label for="cvv">CVV</label>
-                        <input type="text" class="inputbox" id="cvv" name="cvv" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.slice(0, 3);" required />
-                    </div>
-            
-                    <button type="submit" class="button bshop">Finalizar Compra</button>
-                </form>
-            </div>
-            
-          </div>
-        </div>
-      
+    <div class="rightside">
+        <form action="#" id="form-compra">
+            <h2>Información de Envío</h2>
+            <label for="nombre">Nombre</label>
+            <input type="text" class="inputbox" id="nombre" name="nombre" required />
     
+            <label for="correo">Correo Electrónico</label>
+            <input type="email" class="inputbox" id="correo" name="correo" required />
+    
+            <label for="direccion">Dirección de Envío</label>
+            <textarea id="direccion" class="inputbox" name="direccion" rows="1" required></textarea>
+    
+            <label for="lstTipoTarjeta">Tipo de Tarjeta</label>
+            <select id="lstTipoTarjeta" required>
+                <option value="VISA">VISA</option>
+                <option value="MASTERCARD">Mastercard</option>
+                <option value="AMEX">AMEX</option>
+                <option value="CABAL">Cabal</option>
+                <option value="NARANJA">Naranja</option>
+            </select>
+    
+            <label for="nro_tarjeta">Número de Tarjeta</label>
+            <input type="text" class="inputbox" id="nro_tarjeta" required />
+    
+            <div class="expcvv">
+                <label for="exp_date">Fecha de Vencimiento</label>
+                <input type="month" class="inputbox" id="exp_date" name="exp_date" required />
+    
+                <label for="cvv">CVV</label>
+                <input type="text" class="inputbox" id="cvv" name="cvv" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.slice(0, 3);" required />
+            </div>
+    
+            <button type="submit" class="button bshop">Finalizar Compra</button>
+        </form>
+    </div>
+</div>
 
-    <footer>
-        <ul>
-            <li>Profesor Fabrizio Carlassara</li>
-            <li>
-                <a href="mailto:fabrizio.carlassara@davinci.edu.ar?subject=P1%20-%20Consulta%20-%20DW2[M|T|N][A|B]%20-%20Apellido,%20Nombre" target="_blank">fabrizio.carlassara@davinci.edu.ar</a>
-            </li>
-            <li>Programación 1</li>
-        </ul>
-    </footer>
+<footer>
+    <ul>
+        <li>Profesor Fabrizio Carlassara</li>
+        <li>
+            <a href="mailto:fabrizio.carlassara@davinci.edu.ar?subject=P1%20-%20Consulta%20-%20DW2[M|T|N][A|B]%20-%20Apellido,%20Nombre" target="_blank">fabrizio.carlassara@davinci.edu.ar</a>
+        </li>
+        <li>Programación 1</li>
+    </ul>
+</footer>
 
-    <script src="index.js"></script>
+<script src="index.js"></script>
 </body>
 </html>
