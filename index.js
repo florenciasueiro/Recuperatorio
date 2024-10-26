@@ -411,7 +411,7 @@ function mostrarOfertaEspecial() {
 
     setTimeout(() => {
         ofertaEspecial.style.display = 'none'; // Oculta el banner después de 10 segundos
-    }, 10000);
+    }, 1000);
 }
 
 // Función para aplicar el descuento
@@ -419,13 +419,16 @@ function aplicarDescuento() {
     const descuento = 0.10; // 10% de descuento
     const descuentoAplicado = total * descuento;
     total -= descuentoAplicado; // Actualiza el total
-    document.getElementById('precio-total').textContent = `$${total.toFixed(2)}`; // Muestra el total con el descuento
+    document.querySelectorAll('#precio-total').forEach((elemento) => {
+        elemento.textContent = `$${total.toFixed(2)}`;
+    });
+     // Muestra el total con el descuento
     
     // Guarda el nuevo total en Local Storage
     guardarPrecioTotalEnLocalStorage(total);
     
     // Desactiva el botón para evitar aplicar el descuento más de una vez
-    document.getElementById('aplicarDescuentoBtn').disabled = true;
+    document.querySelectorAll('aplicarDescuentoBtn').disabled = true;
 }
 
 
@@ -573,8 +576,10 @@ function eventslisteners() {
           contador = 0;
           document.getElementById('contador-carrito').textContent = contador;
           total = 0;
-          document.getElementById('precio-total').textContent = '$0.00';
-        
+          document.querySelectorAll('#precio-total').forEach((elemento) => {
+    elemento.textContent = `$0.00`;
+});
+
           return false;
     });}
 
@@ -614,7 +619,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Recuperar y mostrar el total en el carrito
     total = obtenerPrecioTotalDesdeLocalStorage(); // Cargar el total guardado
-    document.getElementById('precio-total').textContent = `$${total.toFixed(2)}`;
+    document.querySelectorAll('#precio-total').forEach((elemento) => {
+        elemento.textContent = `$${total.toFixed(2)}`;
+    });
+    
 });
 
 // Vaciar Local Storage
@@ -651,7 +659,10 @@ function vaciarcarrito() {
     contador = 0;
     document.getElementById('contador-carrito').textContent = contador;
     total = 0;
-    document.getElementById('precio-total').textContent = '$0.00';
+    document.querySelectorAll('#precio-total').forEach((elemento) => {
+        elemento.textContent = `$0.00`;
+    });
+    
   
     return false;
   }
@@ -682,9 +693,6 @@ function leerDatosCurso(curso) {
     };
     insertarCurso(infoCurso);
   }
-  
-
-
 
   async function insertarCurso(curso) {
     const precio = parseFloat(curso.precio.substring(1));
@@ -703,7 +711,10 @@ function leerDatosCurso(curso) {
     console.log('desde insertar', listaCursos);
 
     // Actualiza el total y lo guarda en el Local Storage
-    document.getElementById('precio-total').textContent = `$${total.toFixed(2)}`;
+    document.querySelectorAll('#precio-total').forEach((elemento) => {
+        elemento.textContent = `$${total.toFixed(2)}`;
+    });
+    
     guardarPrecioTotalEnLocalStorage(total); // Guarda el total en Local Storage
 }
 
@@ -730,7 +741,10 @@ function leerDatosCurso(curso) {
   
       document.getElementById('contador-carrito').textContent = cantidadEnCarrito;
   
-      document.getElementById('precio-total').textContent = `$${total.toFixed(2)}`;
+      document.querySelectorAll('#precio-total').forEach((elemento) => {
+        elemento.textContent = `$${total.toFixed(2)}`;
+    });
+    
   
       // Guarda el nuevo total en Local Storage
       guardarPrecioTotalEnLocalStorage(total);
