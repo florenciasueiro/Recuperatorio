@@ -3,10 +3,6 @@
  *  Sueiro
  */
 
-
-
-
-
 class Producto {
     constructor(id, nombre, descripcion, precio, imagen, categoria) {
       this.id = id;
@@ -406,15 +402,43 @@ class Producto {
 ];
 
 
-let total = 0;
+let total = 0; // Ejemplo de total inicial (ajústalo al total real del carrito)
 
+// Función para mostrar la oferta especial
 function mostrarOfertaEspecial() {
-    let ofertaEspecial = document.getElementById('ofertaespecialbanner');
-    ofertaEspecial.style.display = 'block'; // Mostrar el banner
+    const ofertaEspecial = document.getElementById('ofertaespecialbanner');
+    ofertaEspecial.style.display = 'block'; // Muestra el banner
+
     setTimeout(() => {
-        ofertaEspecial.style.display = 'none'; // Ocultar el banner después de 1 segundo
+        ofertaEspecial.style.display = 'none'; // Oculta el banner después de 10 segundos
     }, 10000);
 }
+
+// Función para aplicar el descuento
+function aplicarDescuento() {
+    const descuento = 0.10; // 10% de descuento
+    const descuentoAplicado = total * descuento;
+    total -= descuentoAplicado; // Actualiza el total
+    document.getElementById('precio-total').textContent = `$${total.toFixed(2)}`; // Muestra el total con el descuento
+    
+    // Guarda el nuevo total en Local Storage
+    guardarPrecioTotalEnLocalStorage(total);
+    
+    // Desactiva el botón para evitar aplicar el descuento más de una vez
+    document.getElementById('aplicarDescuentoBtn').disabled = true;
+}
+
+
+// Al cargar el DOM, se configura el botón de descuento
+document.addEventListener('DOMContentLoaded', () => {
+    const aplicarDescuentoBtn = document.getElementById('aplicarDescuentoBtn');
+    if (aplicarDescuentoBtn) {
+        aplicarDescuentoBtn.addEventListener('click', aplicarDescuento);
+    }
+    
+    mostrarOfertaEspecial(); // Muestra la oferta especial al cargar la página
+});
+
 
 function generarCards() {
     mostrarOfertaEspecial()
@@ -424,13 +448,8 @@ function generarCards() {
 
     const filtroCategorias = document.getElementById('filtroCategorias');
     const categoriaSeleccionada = filtroCategorias.value;
-    const productosFiltrados = categoriaSeleccionada === 'Todos' ? productos : productos.map(producto => {
-        if (producto.categoria === categoriaSeleccionada) {
+    const productosFiltrados = categoriaSeleccionada === 'Todos' ? productos : productos.filter(producto => producto.categoria === categoriaSeleccionada);
 
-          return producto;
-        }
-      });
-       
 
     productosFiltrados.sort(() => Math.random() - 0.5);
   
@@ -509,16 +528,16 @@ function generarCards() {
       container.appendChild(card);
     });
   }
-  const filtroCategorias = document.getElementById('filtroCategorias');
 
-
-
-  if (filtroCategorias) {
-      filtroCategorias.addEventListener('change', () => {
-          generarCards();
-      });
-      generarCards();
-  }
+  
+// Filtro de categorías
+const filtroCategorias = document.getElementById('filtroCategorias');
+if (filtroCategorias) {
+    filtroCategorias.addEventListener('change', () => {
+        generarCards();
+    });
+    generarCards(); // Generar las tarjetas inicialmente
+}
   
   const agregarCarritoButtons = document.querySelectorAll('.agregar-carrito');
   
@@ -533,11 +552,6 @@ function generarCards() {
   });
   
 
-
-
-
-
-
 const carritoid = document.getElementById('carrito');
 const cursos = document.getElementById('lista-cursos');
 const listaCursos = document.querySelector('#lista-carrito tbody')
@@ -545,7 +559,6 @@ const vaciarCarritoBtn = document.querySelector('#vaciar-carrito');
 const vaciarCarritoBtn2 = document.querySelector('#vaciar-carrito2');
 
 function eventslisteners() {
-    
 
     if (cursos) {cursos.addEventListener('click', comprarCurso);}
 
@@ -556,10 +569,7 @@ function eventslisteners() {
         while (listaCursos.firstChild) {
             listaCursos.removeChild(listaCursos.firstChild);
           }
-        
-      
           vaciarLs();
-        
           contador = 0;
           document.getElementById('contador-carrito').textContent = contador;
           total = 0;
@@ -577,28 +587,45 @@ function eventslisteners() {
     }
 eventslisteners();
 
+// Obtener y guardar la cantidad en el Local Storage
 function obtenerCantidadEnCarritoDesdeLocalStorage() {
     const cantidadEnCarrito = localStorage.getItem('cantidadEnCarrito');
-    console.log(Number.isInteger(cantidadEnCarrito))
-    console.log(parseInt(cantidadEnCarrito))
+    return cantidadEnCarrito ? parseInt(cantidadEnCarrito) : 0; // Si no hay, retorna 0
+}
 
-    return !Number.isInteger(cantidadEnCarrito) ? cantidadEnCarrito: parseInt(cantidadEnCarrito);
-
+function obtenerPrecioTotalDesdeLocalStorage() {
+    const precioTotal = localStorage.getItem('precioTotal');
+    return precioTotal ? parseFloat(precioTotal) : 0; // Retorna 0 si no hay
 }
 
 function guardarCantidadEnCarritoEnLocalStorage(cantidad) {
     localStorage.setItem('cantidadEnCarrito', cantidad.toString());
 }
 
+function guardarPrecioTotalEnLocalStorage(precio) {
+    localStorage.setItem('precioTotal', precio.toString());
+}
+
+// Cargar datos desde el Local Storage al cargar la página
 document.addEventListener('DOMContentLoaded', function() {
+    // Recuperar la cantidad en el carrito
     const cantidadEnCarrito = obtenerCantidadEnCarritoDesdeLocalStorage();
     document.getElementById('contador-carrito').textContent = cantidadEnCarrito;
+
+    // Recuperar y mostrar el total en el carrito
+    total = obtenerPrecioTotalDesdeLocalStorage(); // Cargar el total guardado
+    document.getElementById('precio-total').textContent = `$${total.toFixed(2)}`;
 });
+
+// Vaciar Local Storage
+function vaciarLs() {
+    localStorage.clear();
+}
+
 
 
 function eliminarCursoLS(curso) {
     let cursosLS;
-   
     cursosLS = obtenerCursosLocalStorage();
     
     cursosLS = cursosLS.filter(cursoLS => cursoLS.id !== curso);
@@ -628,7 +655,7 @@ function vaciarcarrito() {
   
     return false;
   }
-  
+
 
 let contador = 0;
 
@@ -659,7 +686,7 @@ function leerDatosCurso(curso) {
 
 
 
-async function insertarCurso(curso) {
+  async function insertarCurso(curso) {
     const precio = parseFloat(curso.precio.substring(1));
     const subtotal = precio * curso.cantidad;
     total += subtotal;
@@ -673,16 +700,16 @@ async function insertarCurso(curso) {
       `);
     listaCursos.appendChild(row);
     guardarCursoLocalStorage(curso);
-    console.log('desde insertar',listaCursos)
-    localStorage.setItem('lstest', JSON.stringify(listaCursos)); 
-    const cursostest = localStorage.getItem('lstest');
-    console.log('desde test',await cursostest);
+    console.log('desde insertar', listaCursos);
 
+    // Actualiza el total y lo guarda en el Local Storage
     document.getElementById('precio-total').textContent = `$${total.toFixed(2)}`;
-  }
+    guardarPrecioTotalEnLocalStorage(total); // Guarda el total en Local Storage
+}
 
 
-function eliminarCurso(e) {
+
+  function eliminarCurso(e) {
     e.preventDefault();
   
     let curso, cursoId;
@@ -697,21 +724,20 @@ function eliminarCurso(e) {
   
       eliminarCursoLS(cursoId);
       let cantidadEnCarrito = obtenerCantidadEnCarritoDesdeLocalStorage();
-        cantidadEnCarrito--
-        guardarCantidadEnCarritoEnLocalStorage(cantidadEnCarrito);
+      cantidadEnCarrito--;
+      guardarCantidadEnCarritoEnLocalStorage(cantidadEnCarrito);
       contador--;
-
-      document.getElementById('contador-carrito').textContent = cantidadEnCarrito
+  
+      document.getElementById('contador-carrito').textContent = cantidadEnCarrito;
   
       document.getElementById('precio-total').textContent = `$${total.toFixed(2)}`;
   
+      // Guarda el nuevo total en Local Storage
+      guardarPrecioTotalEnLocalStorage(total);
+  
       curso.remove();
-
     }
-  }
-  
-  
-  
+}
 
 
 
@@ -744,14 +770,12 @@ async function leerLS() {
       <td><img src="${curso.imagen}" width="100"></td>
       <td>${curso.titulo}</td>
       <td>${curso.precio}</td>
-      <td>${curso.cantidad}</td> <!-- Nueva línea -->
+      <td>${curso.cantidad}</td>
       <td><a href="#" class="borrar-curso" data-id="${curso.id}"><i class="fa-regular fa-circle-xmark"></i></a></td>
       `);
         listaCursos.appendChild(row);
     });
 }
-
-
 
 const carritoElement = document.getElementById('carrito');
 const carritoIcono = document.getElementById('carrito-icono');
@@ -763,55 +787,17 @@ carritoIcono.addEventListener('click', () => {
  }
 
 
+function validarTipoTarjeta(opt, codigo) {
+    const tarjetas = {
+      VISA: /^4[0-9]{3}-?[0-9]{4}-?[0-9]{4}-?[0-9]{4}$/,
+      MASTERCARD: /^5[1-5][0-9]{2}-?[0-9]{4}-?[0-9]{4}-?[0-9]{4}$/,
+      AMEX: /^3[47][0-9-]{16}$/,
+      CABAL: /^(6042|6043|6044|6045|6046|5896)[0-9]{12}$/,
+      NARANJA: /^(589562|402917|402918|527571|527572|0377798|0377799)[0-9]*$/
+    };
+    if (!tarjetas[opt].test(codigo)) alert("Número de tarjeta inválido para tipo seleccionado.");
+  }
 
-
-// window.onload = function() {
-//     const form = document.querySelector('form');
-//     const mensajeCompra = document.getElementById('mensaje-compra');
-    
-//     form.addEventListener('submit', function(event) {
-//       event.preventDefault(); // Evita el envío del formulario
-      
-//       // Aquí puedes realizar validaciones del formulario si es necesario
-      
-//       // Mostrar el mensaje de compra realizada
-//       mensajeCompra.style.display = 'flex';
-//     });
-//   };
-
-
-
-  function fValidarTarjeta(){
-    var opt = $("#lstTipoTarjeta option:selected").val();
-    codigo = $("#nro_tarjeta").val().replace('-', '');
-    var msg = "Valor incorrecto";
-    VISA = /^4[0-9]{3}-?[0-9]{4}-?[0-9]{4}-?[0-9]{4}$/;
-    MASTERCARD = /^5[1-5][0-9]{2}-?[0-9]{4}-?[0-9]{4}-?[0-9]   {4}$/;
-    AMEX = /^3[47][0-9-]{16}$/;
-    CABAL = /^(6042|6043|6044|6045|6046|5896){4}[0-9]{12}$/;
-    NARANJA =   /^(589562|402917|402918|527571|527572|0377798|0377799)[0-9]*$/;
-
-    $("#err_nro_tarjeta").html("");
-    if(luhn(codigo)){
-        if(opt == "VISA" && !codigo.match(VISA)){
-            alert(msg);
-        }
-        if(opt == "MASTERCARD" && !codigo.match(MASTERCARD)){
-            alert(msg);
-        }
-        if(opt == "NARANJA" && !codigo.match(NARANJA)){
-            alert(msg);
-        }
-        if(opt == "CABAL" && !codigo.match(CABAL)){
-            alert(msg);
-        }
-        if(opt == "AMEX" && !codigo.match(AMEX)){
-            alert(msg);
-        }
-    } else {
-        alert(msg);
-    }
-}
 function luhn(value) {
     // Accept only digits, dashes or spaces
     if (/[^0-9-\s]+/.test(value)) return false;
@@ -825,8 +811,6 @@ function luhn(value) {
     }
     return (nCheck % 10) == 0;
 }
-
-
 
 // Obtén el botón de Comprar y agrega un evento click
 // Modifica el evento btnComprar.addEventListener en index.js
@@ -886,4 +870,6 @@ document.getElementById('form-compra').addEventListener('submit', function(event
     window.location.href = 'index.html';
 
     alert('¡Compra realizada con éxito!');
+setTimeout(() => window.location.href = 'index.html', 2000);
+
 });
