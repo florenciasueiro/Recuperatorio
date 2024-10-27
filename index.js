@@ -404,6 +404,7 @@ class Producto {
 
 let total = 0;
 
+
 function mostrarOfertaEspecial() {
     const ofertaEspecialElements = document.querySelectorAll('#ofertaespecialbanner');
     ofertaEspecialElements.forEach((element) => {
@@ -811,6 +812,8 @@ function validarTipoTarjeta(opt, codigo) {
     if (!tarjetas[opt].test(codigo)) alert("Número de tarjeta inválido para tipo seleccionado.");
 }
 
+
+
 function luhn(value) {
     if (/[^0-9-\s]+/.test(value)) return false;
     let nCheck = 0, bEven = false;
@@ -823,6 +826,40 @@ function luhn(value) {
     return (nCheck % 10) == 0;
 }
 
+
+// Obtener el modal
+var modal = document.getElementById("modal");
+
+// Obtener el botón que abre el modal
+var btn = document.getElementById("finalizar-compra");
+
+// Obtener el elemento <span> que cierra el modal
+var span = document.getElementsByClassName("close")[0];
+
+// Cuando el usuario hace clic en el botón, abrir el modal
+btn.onclick = function() {
+    modal.style.display = "flex";
+}
+
+// Cuando el usuario hace clic en <span> (x), cerrar el modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// También cerrar el modal al hacer clic en el botón cerrar
+document.getElementById("cerrar-modal").onclick = function() {
+    modal.style.display = "none";
+}
+
+// Cerrar el modal si el usuario hace clic fuera de él
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+
+
 const btnComprar = document.getElementById('comprar-btn');
 
 btnComprar.addEventListener('click', function(event) {
@@ -830,43 +867,4 @@ btnComprar.addEventListener('click', function(event) {
     localStorage.setItem('cursosCompra', JSON.stringify(obtenerCursosLocalStorage()));
     
     window.location.href = 'compra.html';
-});
-
-
-
-
-document.getElementById('form-compra').addEventListener('submit', function(event) {
-    event.preventDefault(); 
-    console.log('Compra procesada');
-
-});
-
-document.getElementById('form-pago').addEventListener('submit', function(event) {
-    event.preventDefault(); 
-
-    let numeroTarjeta = document.getElementById('nro_tarjeta').value;
-    if (luhn(numeroTarjeta)) {
-
-        console.log('Número de tarjeta válido');
-
-        console.log('Pago procesado');
-
-    } else {
-        console.log('Número de tarjeta inválido');
-        alert('El número de tarjeta de crédito es inválido');
-    }
-});
-
-document.getElementById('form-compra').addEventListener('submit', function(event) {
-    event.preventDefault();
-    let nombre = document.getElementById('nombre').value;
-    let correo = document.getElementById('correo').value;
-    let direccion = document.getElementById('direccion').value;
-    if (nombre.trim() === '' || correo.trim() === '' || direccion.trim() === '') {
-        alert('Por favor completa todos los campos antes de finalizar la compra');
-        return;
-    }
-    window.location.href = 'index.html';
-    alert('¡Compra realizada con éxito!');
-setTimeout(() => window.location.href = 'index.html', 2000);
 });

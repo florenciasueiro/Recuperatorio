@@ -39,7 +39,7 @@
                 <p>¡Oferta Especial! ¡Compra ahora y obtén un 10% de descuento!</p>
                 <button id="toggleDescuentoBtn">Aplicar descuento</button>
             </div>
-                        <span id="contador-carrito">0</span>
+            <span id="contador-carrito">0</span>
         </div>
     </div>
 </header>
@@ -62,8 +62,10 @@
                     </thead>
                     <tbody></tbody>
                 </table>
-                <a href="#" id="vaciar-carrito" class="button u-full-width">Vaciar Carrito</a>
-                <a href="index.html">Seguir Comprando</a>
+                <div class="buttonsCompra">
+                    <a href="#" id="vaciar-carrito" class="button u-full-width">Vaciar Carrito</a>
+                    <button class="buttonShop u-full-width" onclick="window.location.href='index.html'">Seguir Comprando</button>
+                </div>
             </div>
         </div>
     </div>
@@ -99,9 +101,18 @@
                 <label for="cvv">CVV</label>
                 <input type="text" class="inputbox" id="cvv" name="cvv" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.slice(0, 3);" required />
             </div>
-    
-            <button type="submit" class="button bshop">Finalizar Compra</button>
-        </form>
+            
+            <button id="finalizar-compra" class="button">Finalizar Compra</button>        </form>
+    </div>
+</div>
+
+<!-- Modal de felicitación -->
+<div id="modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h1>¡Gracias por tu compra!</h1>
+        <p>Tu compra ha sido completada con éxito.</p>
+        <button id="cerrar-modal" class="button">Cerrar</button>
     </div>
 </div>
 
@@ -114,6 +125,7 @@
         <li>Programación 1</li>
     </ul>
 </footer>
+
 
 <script src="index.js"></script>
 </body>
