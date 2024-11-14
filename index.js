@@ -415,7 +415,7 @@ function mostrarOfertaEspecial() {
         ofertaEspecialElements.forEach((element) => {
             element.style.display = 'none';
         });
-    }, 1000); // Después cambir a 10000 ms para 10 segundos
+    }, 10000); // Después cambir a 10000 ms para 10 segundos
 }
 
 
@@ -827,44 +827,45 @@ function luhn(value) {
 }
 
 
-// Obtener el modal
-var modal = document.getElementById("modal");
+function verificarCamposFormulario() {
+    const campos = document.querySelectorAll('#form-compra [required]');
+    let camposCompletos = true;
 
-// Obtener el botón que abre el modal
-var btn = document.getElementById("finalizar-compra");
+    campos.forEach((campo) => {
+        if (!campo.value.trim()) {
+            camposCompletos = false;
+            campo.classList.add('campo-vacio'); // Agrega una clase para resaltar el campo vacío, opcional
+        } else {
+            campo.classList.remove('campo-vacio'); // Remueve la clase si el campo está lleno, opcional
+        }
+    });
 
-// Obtener el elemento <span> que cierra el modal
-var span = document.getElementsByClassName("close")[0];
-
-// Cuando el usuario hace clic en el botón, abrir el modal
-btn.onclick = function() {
-    modal.style.display = "flex";
+    return camposCompletos;
 }
 
-// Cuando el usuario hace clic en <span> (x), cerrar el modal
-span.onclick = function() {
-    modal.style.display = "none";
+function hayElementosEnCarrito() {
+    const cursos = obtenerCursosLocalStorage(); // Usa la función que ya tienes para obtener los elementos del carrito
+    return cursos.length > 0; // Devuelve true si hay elementos, false si está vacío
 }
 
-// También cerrar el modal al hacer clic en el botón cerrar
-document.getElementById("cerrar-modal").onclick = function() {
-    modal.style.display = "none";
-}
+// Ejemplo de uso al hacer clic en el botón de finalizar compra
+const botonFinalizarCompra = document.querySelector('.finalizar-compra');
 
-// Cerrar el modal si el usuario hace clic fuera de él
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
-
-
-const btnComprar = document.getElementById('comprar-btn');
-
-btnComprar.addEventListener('click', function(event) {
+botonFinalizarCompra.addEventListener('click', function(event) {
     event.preventDefault();
-    localStorage.setItem('cursosCompra', JSON.stringify(obtenerCursosLocalStorage()));
-    
-    window.location.href = 'compra.html';
+    if (verificarCamposFormulario()) {
+            document.getElementById('modal').style.display = 'block';
+            vaciarcarrito();
+    } else {
+        document.getElementById('modalDatos').style.display = 'block';
+    }
+});
+
+
+document.getElementById('cerrar-modalDatos').addEventListener('click', function() {
+    document.getElementById('modalDatos').style.display = 'none';
+});
+
+document.getElementById('cerrar-modal').addEventListener('click', function() {
+    document.getElementById('modal').style.display = 'none';
 });

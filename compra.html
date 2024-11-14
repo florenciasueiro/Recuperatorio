@@ -76,8 +76,8 @@
             <label for="nombre">Nombre</label>
             <input type="text" class="inputbox" id="nombre" name="nombre" required />
     
-            <label for="correo">Correo Electrónico</label>
-            <input type="email" class="inputbox" id="correo" name="correo" required />
+            <label for="email">Correo Electrónico</label> <!-- Cambiado "correo" a "email" -->
+            <input type="email" class="inputbox" id="email" name="email" required />
     
             <label for="direccion">Dirección de Envío</label>
             <textarea id="direccion" class="inputbox" name="direccion" rows="1" required></textarea>
@@ -91,8 +91,8 @@
                 <option value="NARANJA">Naranja</option>
             </select>
     
-            <label for="nro_tarjeta">Número de Tarjeta</label>
-            <input type="text" class="inputbox" id="nro_tarjeta" required />
+            <label for="tarjeta">Número de Tarjeta</label> <!-- Cambiado "nro_tarjeta" a "tarjeta" -->
+            <input type="text" class="inputbox" id="tarjeta" required />
     
             <div class="expcvv">
                 <label for="exp_date">Fecha de Vencimiento</label>
@@ -102,17 +102,29 @@
                 <input type="text" class="inputbox" id="cvv" name="cvv" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.slice(0, 3);" required />
             </div>
             
-            <button id="finalizar-compra" class="button">Finalizar Compra</button>        </form>
+            <button class="button finalizar-compra">Finalizar Compra</button>
+        </form>
     </div>
 </div>
 
 <!-- Modal de felicitación -->
-<div id="modal" class="modal" style="display: none;">
+<div id="modal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h1>¡Gracias por tu compra!</h1>
         <p>Tu compra ha sido completada con éxito.</p>
         <button id="cerrar-modal" class="button">Cerrar</button>
+        <a href="index.html">Volver a la tienda</a>
+    </div>
+</div>
+
+<div id="modalDatos" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h1>Datos Faltantes</h1>
+        <p>Completa los datos requeridos para continuar</p>
+        <button id="cerrar-modalDatos" class="button">Cerrar</button>
+        <a href="index.html">Volver a la tienda</a>
     </div>
 </div>
 
@@ -125,7 +137,6 @@
         <li>Programación 1</li>
     </ul>
 </footer>
-
 
 <script src="index.js"></script>
 </body>
