@@ -854,20 +854,38 @@ function vaciarFormulario() {
     formulario.reset();
 }
 
-const botonFinalizarCompra = document.querySelector('.finalizar-compra');
 
-botonFinalizarCompra.addEventListener('click', function(event) {
-    event.preventDefault();
-    if (!hayElementosEnCarrito()) {
-            document.getElementById('modalVacio').style.display = 'block';
-    } else if (!verificarCamposFormulario()) {
-        document.getElementById('modalDatos').style.display = 'block';
-    } else {
-        document.getElementById('modal').style.display = 'block';
-        vaciarcarrito();
-        vaciarFormulario();
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const botonFinalizarCompra = document.querySelector('.finalizar-compra');
+    if (botonFinalizarCompra) {
+        botonFinalizarCompra.addEventListener('click', function(event) {
+            event.preventDefault();
+            if (!hayElementosEnCarrito()) {
+                document.getElementById('modalVacio').style.display = 'block';
+            } else if (!verificarCamposFormulario()) {
+                document.getElementById('modalDatos').style.display = 'block';
+            } else {
+                document.getElementById('modal').style.display = 'block';
+                vaciarcarrito();
+                vaciarFormulario();
+            }
+        });
+    }
+
+
+    const botonComprar = document.getElementById('comprar-btn');
+    if (botonComprar) {
+        botonComprar.addEventListener('click', function(event) {
+            event.preventDefault();
+            localStorage.setItem('cursosCompra', JSON.stringify(obtenerCursosLocalStorage()));
+            window.location.href = 'compra.html';
+        });
     }
 });
+
 
 document.getElementById('cerrar-modalVacio').addEventListener('click', function() {
     document.getElementById('modalVacio').style.display = 'none';
@@ -881,10 +899,3 @@ document.getElementById('cerrar-modal').addEventListener('click', function() {
     document.getElementById('modal').style.display = 'none';
 });
 
-const btnComprar = document.getElementById('comprar-btn');
-
-btnComprar.addEventListener('click', function(event) {
-    event.preventDefault();
-    localStorage.setItem('cursosCompra', JSON.stringify(obtenerCursosLocalStorage()));
-    window.location.href = 'compra.html';
-});
