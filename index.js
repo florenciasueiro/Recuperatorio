@@ -843,24 +843,35 @@ function verificarCamposFormulario() {
     return camposCompletos;
 }
 
+
 function hayElementosEnCarrito() {
-    const cursos = obtenerCursosLocalStorage(); // Usa la función que ya tienes para obtener los elementos del carrito
-    return cursos.length > 0; // Devuelve true si hay elementos, false si está vacío
+    const cursos = obtenerCursosLocalStorage();
+    return cursos.length > 0;
 }
 
-// Ejemplo de uso al hacer clic en el botón de finalizar compra
+function vaciarFormulario() {
+    const formulario = document.getElementById('form-compra');
+    formulario.reset();
+}
+
 const botonFinalizarCompra = document.querySelector('.finalizar-compra');
 
 botonFinalizarCompra.addEventListener('click', function(event) {
     event.preventDefault();
-    if (verificarCamposFormulario()) {
-            document.getElementById('modal').style.display = 'block';
-            vaciarcarrito();
-    } else {
+    if (!hayElementosEnCarrito()) {
+            document.getElementById('modalVacio').style.display = 'block';
+    } else if (!verificarCamposFormulario()) {
         document.getElementById('modalDatos').style.display = 'block';
+    } else {
+        document.getElementById('modal').style.display = 'block';
+        vaciarcarrito();
+        vaciarFormulario();
     }
 });
 
+document.getElementById('cerrar-modalVacio').addEventListener('click', function() {
+    document.getElementById('modalVacio').style.display = 'none';
+});
 
 document.getElementById('cerrar-modalDatos').addEventListener('click', function() {
     document.getElementById('modalDatos').style.display = 'none';
@@ -868,4 +879,12 @@ document.getElementById('cerrar-modalDatos').addEventListener('click', function(
 
 document.getElementById('cerrar-modal').addEventListener('click', function() {
     document.getElementById('modal').style.display = 'none';
+});
+
+const btnComprar = document.getElementById('comprar-btn');
+
+btnComprar.addEventListener('click', function(event) {
+    event.preventDefault();
+    localStorage.setItem('cursosCompra', JSON.stringify(obtenerCursosLocalStorage()));
+    window.location.href = 'compra.html';
 });
