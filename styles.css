@@ -651,20 +651,54 @@ p, .labelShop{
   display: block;
 }
 
-#ofertaespecialbanner {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: red;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 18px;
-  font-weight: bold;
-  z-index: 1000;
-  /* display: none; */
+.campo-invalido {
+    border: 2px solid #ff0000;
+    background-color: #ffebeb;
 }
 
+.campo-invalido:focus {
+    outline: none;
+    border-color: #ff0000;
+    box-shadow: 0 0 5px #ff0000;
+}
+
+#ofertaespecialbanner {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #540000;
+    padding: 20px 30px;
+    border-radius: 50px;
+    font-size: 1.2em;
+    font-weight: 600;
+    z-index: 1000;
+    color: #DFCCBB;
+    text-align: center;
+    box-shadow: 11px 11px 36px #370000, -11px -11px 36px #710000;
+}
+
+#toggleDescuentoBtn {
+    margin: 15px auto 0;
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #DFCCBB;
+    color: #540000;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    display: block;
+    box-shadow: none;
+}
+
+#toggleDescuentoBtn:hover {
+  opacity: 0.9;
+}
+
+#toggleDescuentoBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 .buttonShop{
   color: #DFCCBB;
   background-color: #4c0000;
@@ -690,15 +724,20 @@ p, .labelShop{
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color: #540000;
   margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
+  padding: 40px;
+  border: none;
+  border-radius: 50px;
   width: 80%;
+  max-width: 600px;
+  text-align: center;
+  color: #DFCCBB;
+  
 }
 
 .close {
-  color: #aaa;
+  color: #DFCCBB;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -706,9 +745,36 @@ p, .labelShop{
 
 .close:hover,
 .close:focus {
-  color: black;
+  color: #DFCCBB;
+  opacity: 0.8;
   text-decoration: none;
   cursor: pointer;
+}
+
+.modal-content h1 {
+  font-size: 2.4em;
+  margin-bottom: 20px;
+}
+
+.modal-content p {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+
+.modal-content button {
+  margin: 20px auto;
+}
+
+.modal-content a {
+  color: #DFCCBB;
+  text-decoration: none;
+  font-size: 1.1em;
+  display: block;
+  margin-top: 20px;
+}
+
+.modal-content a:hover {
+  text-decoration: underline;
 }
 
 .buttonsCompra{
