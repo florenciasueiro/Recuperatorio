@@ -430,7 +430,11 @@ function generarCards() {
     mostrarOfertaEspecial(); // Ya está implementado correctamente aquí
     const containerId = 'slideContainer';
     const container = document.getElementById(containerId);
-    container.innerHTML = '';
+    
+    // Limpiar el contenedor sin usar innerHTML
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
 
     const filtroCategorias = document.getElementById('filtroCategorias');
     const categoriaSeleccionada = filtroCategorias.value;
@@ -447,6 +451,12 @@ function generarCards() {
       circulo.classList.add('circulo');
       const imagen = document.createElement('img');
       imagen.src = producto.imagen;
+      
+      // Agregar evento para mostrar detalle al hacer clic en la imagen
+      imagen.addEventListener('click', () => {
+        mostrarDetalleProducto(producto);
+      });
+      
       circulo.appendChild(imagen);
   
       const infoCard = document.createElement('div');
@@ -454,6 +464,12 @@ function generarCards() {
   
       const nombre = document.createElement('h4');
       nombre.textContent = producto.nombre;
+      
+      // Agregar evento para mostrar detalle al hacer clic en el nombre
+      nombre.style.cursor = 'pointer';
+      nombre.addEventListener('click', () => {
+        mostrarDetalleProducto(producto);
+      });
   
       const precio = document.createElement('p');
       precio.classList.add('precio');
@@ -500,6 +516,16 @@ function generarCards() {
       agregarCarrito.classList.add('u-full-width', 'button-primary', 'button', 'input', 'agregar-carrito');
       agregarCarrito.dataset.id = producto.id;
       agregarCarrito.textContent = 'Agregar al Carrito';
+      
+      // Agregar botón para ver detalle
+      const verDetalle = document.createElement('a');
+      verDetalle.href = '#';
+      verDetalle.classList.add('ver-detalle');
+    //   verDetalle.textContent = 'Ver detalle';
+      verDetalle.addEventListener('click', (e) => {
+        e.preventDefault();
+        mostrarDetalleProducto(producto);
+      });
   
       infoCard.appendChild(nombre);
       infoCard.appendChild(precio);
@@ -507,6 +533,7 @@ function generarCards() {
       infoCard.appendChild(descripcion);
       infoCard.appendChild(cantidadDiv);
       infoCard.appendChild(agregarCarrito);
+      infoCard.appendChild(verDetalle);
   
       card.appendChild(circulo);
       card.appendChild(infoCard);
@@ -652,8 +679,6 @@ function vaciarcarrito() {
     return false;
 }
 
-
-
 let contador = 0;
 
 function comprarCurso(e) {
@@ -684,31 +709,74 @@ function insertarCurso(curso) {
     const precio = parseFloat(curso.precio.substring(1));
     const subtotal = precio * curso.cantidad;
     total += subtotal;
+    
     if(filaExistente){
         let cantidadActual = parseInt(filaExistente.querySelector('.cant').textContent);
         let nuevaCantidad = cantidadActual + curso.cantidad;
         filaExistente.querySelector('.cant').textContent = nuevaCantidad;
         let nuevoSubtotal = precio * nuevaCantidad;
         filaExistente.querySelector('.subtotal').textContent = `$${nuevoSubtotal.toFixed(2)}`;
+        
+        // Actualizar el curso en localStorage con la nueva cantidad
+        actualizarCantidadEnLocalStorage(curso.id, nuevaCantidad);
+        
+        // Mostrar mensaje de cantidad actualizada
+        mostrarMensajeCantidad(curso.titulo, nuevaCantidad);
     }
-else{
-    const row = document.createElement('tr');
+    else{
+        const row = document.createElement('tr');
         row.setAttribute('data-id', curso.id);
-        row.innerHTML = `
-            <td><img src="${curso.imagen}" width="100"></td>
-            <td>${curso.titulo}</td>
-            <td>${curso.precio}</td>
-            <td class="cant">${curso.cantidad}</td>
-            <td class="subtotal">$${subtotal.toFixed(2)}</td>
-            <td><a href="#" class="borrar-curso" data-id="${curso.id}"><i class="fa-regular fa-circle-xmark"></i></a></td>
-        `;
+        
+        // Crear celdas de manera segura sin innerHTML
+        const imgCell = document.createElement('td');
+        const img = document.createElement('img');
+        img.src = curso.imagen;
+        img.width = 100;
+        imgCell.appendChild(img);
+        
+        const titleCell = document.createElement('td');
+        titleCell.textContent = curso.titulo;
+        
+        const priceCell = document.createElement('td');
+        priceCell.textContent = curso.precio;
+        
+        const quantityCell = document.createElement('td');
+        quantityCell.classList.add('cant');
+        quantityCell.textContent = curso.cantidad;
+        
+        const subtotalCell = document.createElement('td');
+        subtotalCell.classList.add('subtotal');
+        subtotalCell.textContent = `$${subtotal.toFixed(2)}`;
+        
+        const deleteCell = document.createElement('td');
+        const deleteLink = document.createElement('a');
+        deleteLink.href = '#';
+        deleteLink.classList.add('borrar-curso');
+        deleteLink.setAttribute('data-id', curso.id);
+        
+        const deleteIcon = document.createElement('i');
+        deleteIcon.classList.add('fa-regular', 'fa-circle-xmark');
+        deleteLink.appendChild(deleteIcon);
+        deleteCell.appendChild(deleteLink);
+        
+        // Agregar celdas a la fila
+        row.appendChild(imgCell);
+        row.appendChild(titleCell);
+        row.appendChild(priceCell);
+        row.appendChild(quantityCell);
+        row.appendChild(subtotalCell);
+        row.appendChild(deleteCell);
+        
         listaCursos.appendChild(row);
-    guardarCursoLocalStorage(curso);
-
-}
-document.querySelectorAll('#precio-total').forEach((elemento) => {
-    elemento.textContent = `$${total.toFixed(2)}`;
-});
+        guardarCursoLocalStorage(curso);
+        
+        // Mostrar mensaje de cantidad
+        mostrarMensajeCantidad(curso.titulo, curso.cantidad);
+    }
+    
+    document.querySelectorAll('#precio-total').forEach((elemento) => {
+        elemento.textContent = `$${total.toFixed(2)}`;
+    });
     
     guardarPrecioTotalEnLocalStorage(total);
 }
@@ -752,6 +820,42 @@ document.querySelectorAll('#precio-total').forEach((elemento) => {
     let cursos = obtenerCursosLocalStorage();
     cursos.push(curso);
     localStorage.setItem('cursos', JSON.stringify(cursos));
+}
+
+// Función para mostrar mensaje de cantidad
+function mostrarMensajeCantidad(nombre, cantidad) {
+    const mensajeDiv = document.createElement('div');
+    mensajeDiv.classList.add('mensaje-cantidad');
+    mensajeDiv.textContent = `${nombre} (${cantidad} unidades) agregado al carrito`;
+    
+    document.body.appendChild(mensajeDiv);
+    
+    // Animar entrada
+    setTimeout(() => {
+        mensajeDiv.classList.add('mostrar');
+    }, 10);
+    
+    // Remover después de 3 segundos
+    setTimeout(() => {
+        mensajeDiv.classList.remove('mostrar');
+        setTimeout(() => {
+            document.body.removeChild(mensajeDiv);
+        }, 300);
+    }, 3000);
+}
+
+// Función para actualizar cantidad en localStorage
+function actualizarCantidadEnLocalStorage(id, nuevaCantidad) {
+    let cursosLS = obtenerCursosLocalStorage();
+    
+    cursosLS = cursosLS.map(curso => {
+        if (curso.id === id) {
+            curso.cantidad = nuevaCantidad;
+        }
+        return curso;
+    });
+    
+    localStorage.setItem('cursos', JSON.stringify(cursosLS));
 }
 
 
@@ -848,27 +952,58 @@ function vaciarFormulario() {
 }
 
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
-
-    const botonFinalizarCompra = document.querySelector('.finalizar-compra');
-    if (botonFinalizarCompra) {
-        botonFinalizarCompra.addEventListener('click', function(event) {
-            event.preventDefault();
-            if (!hayElementosEnCarrito()) {
-                document.getElementById('modalVacio').style.display = 'block';
-            } else if (!verificarCamposFormulario()) {
-                document.getElementById('modalDatos').style.display = 'block';
-            } else {
-                document.getElementById('modal').style.display = 'block';
-                vaciarcarrito();
-                vaciarFormulario();
+    // Seleccionar todos los elementos con clase 'close'
+    const closeButtons = document.querySelectorAll('.modal .close');
+    
+    // Agregar evento de clic a cada botón de cierre
+    closeButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            // Encontrar el modal padre
+            const modal = this.closest('.modal');
+            if (modal) {
+                // Ocultar el modal
+                modal.style.display = 'none';
+                
+                // Si es el modal de éxito, asegurarse de que el carrito esté vacío
+                if (modal.id === 'modal') {
+                    vaciarcarrito();
+                }
             }
+        });
+    });
+
+    // Agregar event listener para el campo CVV
+    const cvvInput = document.getElementById('cvv');
+    if (cvvInput) {
+        cvvInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+            this.value = this.value.slice(0, 3);
         });
     }
 
-    // Comprar button functionality
+const botonFinalizarCompra = document.querySelector('.finalizar-compra');
+
+if (botonFinalizarCompra) {
+    botonFinalizarCompra.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        if (!hayElementosEnCarrito()) {
+            document.getElementById('modalVacio').style.display = 'block';
+        } else if (!verificarCamposFormulario()) {
+            document.getElementById('modalDatos').style.display = 'block';
+            
+        } else {
+            vaciarcarrito();
+            document.getElementById('modal-carrito').style.display = 'none';
+
+            document.getElementById('modal').style.display = 'block';
+            
+            vaciarFormulario();
+        }
+    });
+}
+
     const botonComprar = document.getElementById('comprar-btn');
     if (botonComprar) {
         botonComprar.addEventListener('click', function(e) {
@@ -877,6 +1012,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Verificar si el carrito está vacío
             if (!hayElementosEnCarrito()) {
                 document.getElementById('modalVacio').style.display = 'block';
+
                 return;
             }
             
@@ -894,13 +1030,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 precioTotalModal.textContent = precioTotal;
             }
             
+            // Cerrar el modal del carrito
+            document.getElementById('carrito').style.display = 'none';
+            
             // Mostrar el modal de compra
             document.getElementById('modalCompra').style.display = 'block';
         });
     }
 
     // Mostrar/ocultar campos de tarjeta según método de pago seleccionado
-    const metodoPago = document.getElementById('metodo-pago-modal');
+    const metodoPago = document.getElementById('lstTipoTarjeta');
     if (metodoPago) {
         metodoPago.addEventListener('change', function() {
             const camposTarjeta = document.getElementById('campos-tarjeta');
@@ -910,14 +1049,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('lstTipoTarjeta-modal').setAttribute('required', '');
                 document.getElementById('tarjeta-modal').setAttribute('required', '');
                 document.getElementById('exp_date-modal').setAttribute('required', '');
-                document.getElementById('cvv-modal').setAttribute('required', '');
+                document.getElementById('cvv').setAttribute('required', '');
             } else {
                 camposTarjeta.style.display = 'none';
                 // Quitar el atributo required de los campos de tarjeta
                 document.getElementById('lstTipoTarjeta-modal').removeAttribute('required');
                 document.getElementById('tarjeta-modal').removeAttribute('required');
                 document.getElementById('exp_date-modal').removeAttribute('required');
-                document.getElementById('cvv-modal').removeAttribute('required');
+                document.getElementById('cvv').removeAttribute('required');
             }
         });
         // Inicializar campos de tarjeta como ocultos
@@ -965,11 +1104,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     formValido = false;
                 } else {
                     campo.classList.remove('campo-invalido');
+                    
                 }
             });
             
             // Validaciones específicas según el método de pago
-            const metodoPago = document.getElementById('metodo-pago-modal').value;
+            const metodoPago = document.getElementById('lstTipoTarjeta').value;
             
             if (metodoPago === 'tarjeta') {
                 // Validar número de tarjeta según el tipo seleccionado
@@ -990,9 +1130,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 
                 // Validar CVV (debe ser numérico y tener 3 dígitos)
-                const cvv = document.getElementById('cvv-modal').value;
+                const cvv = document.getElementById('cvv').value;
                 if (!/^[0-9]{3}$/.test(cvv)) {
-                    document.getElementById('cvv-modal').classList.add('campo-invalido');
+                    document.getElementById('cvv').classList.add('campo-invalido');
                     formValido = false;
                 }
             }
@@ -1040,6 +1180,10 @@ document.getElementById('cerrar-modalDatos').addEventListener('click', function(
 document.getElementById('cerrar-modal').addEventListener('click', function() {
     document.getElementById('modal').style.display = 'none';
 });
+
+// Función para mostrar el detalle del producto
+
+
 document.getElementById('form-compra').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -1072,10 +1216,48 @@ document.getElementById('form-compra').addEventListener('submit', function(e) {
     vaciarcarrito();
 });
 
-// Agregar detección de teclado para cerrar modales con ESC
+// Agregar detección de teclado para cerrar modales con ESC y navegar entre productos
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         const modales = document.querySelectorAll('.modal');
         modales.forEach(modal => modal.style.display = 'none');
+        
+        // También cerrar el modal de detalle de producto
+        const modalDetalle = document.getElementById('modal-detalle-producto');
+        if (modalDetalle) {
+            modalDetalle.style.display = 'none';
+        }
+    }
+    
+    // Flechas para navegar entre productos
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        const modalDetalle = document.getElementById('modal-detalle-producto');
+        
+        // Solo si el modal de detalle está abierto
+        if (modalDetalle && modalDetalle.style.display === 'block') {
+            const productoActual = modalDetalle.getAttribute('data-producto-id');
+            if (productoActual) {
+                const index = productos.findIndex(p => p.id === parseInt(productoActual));
+                if (index !== -1) {
+                    let nuevoIndex;
+                    
+                    if (e.key === 'ArrowLeft') {
+                        nuevoIndex = index === 0 ? productos.length - 1 : index - 1;
+                    } else {
+                        nuevoIndex = index === productos.length - 1 ? 0 : index + 1;
+                    }
+                    
+                    mostrarDetalleProducto(productos[nuevoIndex]);
+                }
+            }
+        }
+    }
+});
+
+// Cerrar modal de detalle de producto al hacer clic fuera del contenido
+window.addEventListener('click', function(event) {
+    const modalDetalle = document.getElementById('modal-detalle-producto');
+    if (event.target === modalDetalle) {
+        modalDetalle.style.display = 'none';
     }
 });

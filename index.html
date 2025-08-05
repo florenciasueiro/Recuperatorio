@@ -180,7 +180,11 @@
                               <input type="month" class="inputbox" id="exp_date" name="exp_date" required />
                   
                               <label for="cvv">CVV</label>
+                              <!-- Reemplazar la línea 293 que contiene: -->
                               <input type="text" class="inputbox" id="cvv" name="cvv" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.slice(0, 3);" required />
+                              
+                              <!-- Por: -->
+                              <input type="text" class="inputbox" id="cvv-modal" name="cvv" maxlength="3" required />
                           </div>
                           
                           <button class="button finalizar-compra">Finalizar Compra</button>
