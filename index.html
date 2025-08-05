@@ -40,7 +40,7 @@
                             <li><a href="#sobreNosotros">Sobre Nosotros</a></li>
                             <li><a href="#NuestrossVinos">Nuestros vinos</a></li>
                             <li><a href="#maridaje">Maridaje</a></li>
-                            <li><a href="compra.html">Comprar</a></li>
+                            <li><a href="#seccion-compra" id="nav-comprar">Comprar</a></li>
                             <li><a href="#contacto">Contacto</a></li>
                         </ul>
                     </nav>
@@ -123,70 +123,169 @@
             </div>
           </section>
 
+          <!-- Sección de Compra -->
+          <div id="seccion-compra" class="seccion" style="display: none;">
+              <div class="mainscreen">
+                  <div class="leftside">
+                      <div id="compra"></div>
+                      <div id="carrito-checkout" style="display: block;">
+                          <div class="carrito-container">
+                              <table id="lista-carrito-checkout" class="u-full-width">
+                                  <thead>
+                                      <tr>
+                                          <th>Imagen</th>
+                                          <th>Nombre</th>
+                                          <th>Precio</th>
+                                          <th>Cant</th>
+                                          <th><p id="precio-total-checkout">$0.00</p></th>
+                                          <th></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody></tbody>
+                              </table>
+                              <div class="buttonsCompra">
+                                  <a href="#" id="vaciar-carrito-checkout" class="button u-full-width">Vaciar Carrito</a>
+                                  <button class="buttonShop u-full-width seguir-comprando">Seguir Comprando</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="rightside">
+                      <form action="#" id="form-compra">
+                          <h2>Información de Envío</h2>
+                          <label for="nombre">Nombre</label>
+                          <input type="text" class="inputbox" id="nombre" name="nombre" required />
+                  
+                          <label for="email">Correo Electrónico</label>
+                          <input type="email" class="inputbox" id="email" name="email" required />
+                  
+                          <label for="direccion">Dirección de Envío</label>
+                          <textarea id="direccion" class="inputbox" name="direccion" rows="1" required></textarea>
+                  
+                          <label for="lstTipoTarjeta">Tipo de Tarjeta</label>
+                          <select id="lstTipoTarjeta" required>
+                              <option value="VISA">VISA</option>
+                              <option value="MASTERCARD">Mastercard</option>
+                              <option value="AMEX">AMEX</option>
+                              <option value="CABAL">Cabal</option>
+                              <option value="NARANJA">Naranja</option>
+                          </select>
+                  
+                          <label for="tarjeta">Número de Tarjeta</label>
+                          <input type="text" class="inputbox" id="tarjeta" required />
+                  
+                          <div class="expcvv">
+                              <label for="exp_date">Fecha de Vencimiento</label>
+                              <input type="month" class="inputbox" id="exp_date" name="exp_date" required />
+                  
+                              <label for="cvv">CVV</label>
+                              <input type="text" class="inputbox" id="cvv" name="cvv" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.slice(0, 3);" required />
+                          </div>
+                          
+                          <button class="button finalizar-compra">Finalizar Compra</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Modales -->
+          <!-- Modal de felicitación -->
+          <div id="modal" class="modal">
+              <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <h1>¡Gracias por tu compra!</h1>
+                  <p>Tu compra ha sido completada con éxito.</p>
+                  <button id="cerrar-modal" class="button">Cerrar</button>
+                  <a href="#NuestrossVinos" class="volver-tienda">Volver a la tienda</a>
+              </div>
+          </div>
+
+          <div id="modalDatos" class="modal">
+              <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <h1>Datos Faltantes</h1>
+                  <p>Completa los datos requeridos para continuar</p>
+                  <button id="cerrar-modalDatos" class="button">Cerrar</button>
+                  <a href="#NuestrossVinos" class="volver-tienda">Volver a la tienda</a>
+              </div>
+          </div>
+
+          <div id="modalVacio" class="modal">
+              <div class="modal-content">
+                  <span class="close">&times;</span>
+                  <h1>Tu carrito está Vacío</h1>
+                  <p>No podemos continuar con la operación, no hay elementos en tu carrito</p>
+                  <button id="cerrar-modalVacio" class="button">Cerrar</button>
+                  <a href="#NuestrossVinos" class="volver-tienda">Volver a la tienda</a>
+              </div>
+          </div>
+
+          <!-- Modal de Compra -->
+          <div id="modalCompra" class="modal">
+              <div class="modal-content">
+                  <span class="close" id="cerrarModal">&times;</span>
+                  <h1>Finalizar Compra</h1>
+                  <div class="modal-compra-content">
+                      <div class="modal-carrito">
+                          <h2>Tu Carrito</h2>
+                          <div id="carrito-modal" class="carrito-container">
+                              <table id="lista-carrito-modal" class="u-full-width">
+                                  <thead>
+                                      <tr>
+                                          <th>Imagen</th>
+                                          <th>Nombre</th>
+                                          <th>Precio</th>
+                                          <th>Cant</th>
+                                          <th></th>
+                                      </tr>
+                                  </thead>
+                                  <tbody></tbody>
+                              </table>
+                              <p id="precio-total-modal">$0.00</p>
+                          </div>
+                      </div>
+                      
+                      <div class="modal-form">
+                          <h2>Información de Pago</h2>
+                          <form action="#" id="form-compra-modal">
+                              <label for="nombre-modal">Nombre</label>
+                              <input type="text" class="inputbox" id="nombre-modal" name="nombre" required />
+                      
+                              <label for="email-modal">Correo Electrónico</label>
+                              <input type="email" class="inputbox" id="email-modal" name="email" required />
+                      
+                              <label for="direccion-modal">Dirección de Envío</label>
+                              <textarea id="direccion-modal" class="inputbox" name="direccion" rows="1" required></textarea>
+                      
+                              <label for="lstTipoTarjeta-modal">Tipo de Tarjeta</label>
+                              <select id="lstTipoTarjeta-modal" required>
+                                  <option value="VISA">VISA</option>
+                                  <option value="MASTERCARD">Mastercard</option>
+                                  <option value="AMEX">AMEX</option>
+                                  <option value="CABAL">Cabal</option>
+                                  <option value="NARANJA">Naranja</option>
+                              </select>
+                      
+                              <label for="tarjeta-modal">Número de Tarjeta</label>
+                              <input type="text" class="inputbox" id="tarjeta-modal" required />
+                      
+                              <div class="expcvv">
+                                  <label for="exp_date-modal">Fecha de Vencimiento</label>
+                                  <input type="month" class="inputbox" id="exp_date-modal" name="exp_date" required />
+                      
+                                  <label for="cvv-modal">CVV</label>
+                                  <input type="text" class="inputbox" id="cvv-modal" name="cvv" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.slice(0, 3);" required />
+                              </div>
+                              
+                              <button class="button finalizar-compra-modal">Finalizar Compra</button>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
         </main>
-
-
-
-        <div id="seccion-compra" class="seccion" style="display: none;">
-                <div class="mainscreen">
-                    <div class="leftside">
-                        <div id="carrito-compra">
-                            <div class="carrito-container">
-                                <h2>Tu Carrito</h2>
-                                <table id="lista-carrito-compra" class="u-full-width">
-                                    <thead>
-                                        <tr>
-                                            <th>Imagen</th>
-                                            <th>Nombre</th>
-                                            <th>Precio</th>
-                                            <th>Cant</th>
-                                            <th><p id="precio-total-compra">Total: $0.00</p></th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                                <button id="vaciar-carrito-compra" class="buttonShop u-full-width">Vaciar Carrito</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rightside">
-                        <form action="#" id="form-compra">
-                                    <h2>Información de Envío</h2>
-                                    <label for="nombre">Nombre</label>
-                                    <input type="text" class="inputbox" id="nombre" name="nombre" required />
-                            
-                                    <label for="correo">Correo Electrónico</label>
-                                    <input type="email" class="inputbox" id="correo" name="correo" required />
-                            
-                                    <label for="direccion">Dirección de Envío</label>
-                                    <textarea id="direccion" class="inputbox" name="direccion" rows="1" required></textarea>
-                    
-                            <label for="lstTipoTarjeta">Tipo de Tarjeta</label>
-                            <select id="lstTipoTarjeta">
-                                <option value="VISA">VISA</option>
-                                <option value="MASTERCARD">Mastercard</option>
-                                <option value="AMEX">AMEX</option>
-                                <option value="CABAL">Cabal</option>
-                                <option value="NARANJA">Naranja</option>
-                            </select>
-                    
-                            <label for="nro_tarjeta">Número de Tarjeta</label>
-                            <input type="text" class="inputbox" id="nro_tarjeta" />
-                    
-                            <div class="expcvv">
-                                <label for="exp_date">Fecha de Vencimiento</label>
-                                <input type="month" class="inputbox" id="exp_date" name="exp_date" required />
-                    
-                                <label for="cvv">CVV</label>
-                                <input type="text" class="inputbox" id="cvv" name="cvv" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.slice(0, 3);" required />
-                            </div>
-                    
-                            <button type="submit" class="button bshop">Finalizar Compra</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
 
 
 

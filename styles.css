@@ -723,6 +723,67 @@ p, .labelShop{
   background-color: rgba(0,0,0,0.4); /* Fondo semitransparente */
 }
 
+.modal-compra-content {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .modal-compra-content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .modal-carrito, .modal-form {
+    width: 48%;
+  }
+}
+
+.modal-carrito, .modal-form {
+  margin-bottom: 20px;
+}
+
+#modalCompra .modal-content {
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+#form-compra-modal label {
+  color: #DFCCBB;
+  display: block;
+  margin-bottom: 5px;
+}
+
+#form-compra-modal input, 
+#form-compra-modal select, 
+#form-compra-modal textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #DFCCBB;
+  background-color: rgba(223, 204, 187, 0.1);
+  color: #DFCCBB;
+}
+
+#form-compra-modal .expcvv {
+  display: flex;
+  gap: 10px;
+}
+
+#form-compra-modal .expcvv > div {
+  flex: 1;
+}
+
+#precio-total-modal {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: right;
+  margin-top: 10px;
+  color: #DFCCBB;
+}
+
 .modal-content {
   background-color: #540000;
   margin: 15% auto;

@@ -600,6 +600,7 @@ function guardarPrecioTotalEnLocalStorage(precio) {
     localStorage.setItem('precioTotal', precio.toString());
 }
 
+// Add this to your existing DOMContentLoaded event listener
 document.addEventListener('DOMContentLoaded', function() {
     const cantidadEnCarrito = obtenerCantidadEnCarritoDesdeLocalStorage();
     document.getElementById('contador-carrito').textContent = cantidadEnCarrito;
@@ -867,76 +868,164 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-
+    // Comprar button functionality
     const botonComprar = document.getElementById('comprar-btn');
     if (botonComprar) {
-        botonComprar.addEventListener('click', function(event) {
-            event.preventDefault();
-            const checkoutSection = document.getElementById('checkout-section');
-            const nuestrosVinosSection = document.getElementById('NuestrossVinos');
-            const sobreNosotrosSection = document.getElementById('sobreNosotros');
+        botonComprar.addEventListener('click', function(e) {
+            e.preventDefault();
             
-            if (checkoutSection) {
-                // Ocultar otras secciones
-                if (nuestrosVinosSection) nuestrosVinosSection.style.display = 'none';
-                if (sobreNosotrosSection) sobreNosotrosSection.style.display = 'none';
-                
-                // Mostrar sección de checkout
-                checkoutSection.style.display = 'block';
-                
-                // Copiar elementos del carrito al carrito de checkout
-                const listaCarrito = document.querySelector('#lista-carrito tbody');
-                const listaCarritoCheckout = document.querySelector('#lista-carrito-checkout tbody');
-                if (listaCarrito && listaCarritoCheckout) {
-                    listaCarritoCheckout.innerHTML = listaCarrito.innerHTML;
-                }
-                
-                // Actualizar precio total en checkout
-                const precioTotal = document.querySelector('#precio-total').textContent;
-                const precioTotalCheckout = document.querySelector('#precio-total-checkout');
-                if (precioTotalCheckout) {
-                    precioTotalCheckout.textContent = precioTotal;
-                }
-                
-                window.location.href = '#checkout-section';
+            // Verificar si el carrito está vacío
+            if (!hayElementosEnCarrito()) {
+                document.getElementById('modalVacio').style.display = 'block';
+                return;
             }
+            
+            // Copiar elementos del carrito al modal
+            const listaCarrito = document.querySelector('#lista-carrito tbody');
+            const listaCarritoModal = document.querySelector('#lista-carrito-modal tbody');
+            if (listaCarrito && listaCarritoModal) {
+                listaCarritoModal.innerHTML = listaCarrito.innerHTML;
+            }
+            
+            // Actualizar precio total en el modal
+            const precioTotal = document.querySelector('#precio-total').textContent;
+            const precioTotalModal = document.querySelector('#precio-total-modal');
+            if (precioTotalModal) {
+                precioTotalModal.textContent = precioTotal;
+            }
+            
+            // Mostrar el modal de compra
+            document.getElementById('modalCompra').style.display = 'block';
         });
     }
 
-    // Add event listener for "Seguir Comprando" button
-    document.querySelector('.seguir-comprando')?.addEventListener('click', function(event) {
-        event.preventDefault();
-        const checkoutSection = document.getElementById('checkout-section');
-        const nuestrosVinosSection = document.getElementById('NuestrossVinos');
-        
-        if (checkoutSection && nuestrosVinosSection) {
-            checkoutSection.style.display = 'none';
-            nuestrosVinosSection.style.display = 'block';
-            window.location.href = '#NuestrossVinos';
+    // Mostrar/ocultar campos de tarjeta según método de pago seleccionado
+    const metodoPago = document.getElementById('metodo-pago-modal');
+    if (metodoPago) {
+        metodoPago.addEventListener('change', function() {
+            const camposTarjeta = document.getElementById('campos-tarjeta');
+            if (this.value === 'tarjeta') {
+                camposTarjeta.style.display = 'block';
+                // Hacer los campos de tarjeta requeridos
+                document.getElementById('lstTipoTarjeta-modal').setAttribute('required', '');
+                document.getElementById('tarjeta-modal').setAttribute('required', '');
+                document.getElementById('exp_date-modal').setAttribute('required', '');
+                document.getElementById('cvv-modal').setAttribute('required', '');
+            } else {
+                camposTarjeta.style.display = 'none';
+                // Quitar el atributo required de los campos de tarjeta
+                document.getElementById('lstTipoTarjeta-modal').removeAttribute('required');
+                document.getElementById('tarjeta-modal').removeAttribute('required');
+                document.getElementById('exp_date-modal').removeAttribute('required');
+                document.getElementById('cvv-modal').removeAttribute('required');
+            }
+        });
+        // Inicializar campos de tarjeta como ocultos
+        document.getElementById('campos-tarjeta').style.display = 'none';
+    }
+
+    // Cerrar modal al hacer clic en X
+    const cerrarModal = document.getElementById('cerrarModal');
+    if (cerrarModal) {
+        cerrarModal.addEventListener('click', function() {
+            document.getElementById('modalCompra').style.display = 'none';
+        });
+    }
+
+    // Botón Cancelar y volver al sitio
+    const cancelarCompra = document.getElementById('cancelar-compra');
+    if (cancelarCompra) {
+        cancelarCompra.addEventListener('click', function() {
+            document.getElementById('modalCompra').style.display = 'none';
+        });
+    }
+
+    // Cerrar modal al hacer clic fuera del contenido
+    window.addEventListener('click', function(event) {
+        const modalCompra = document.getElementById('modalCompra');
+        if (event.target === modalCompra) {
+            modalCompra.style.display = 'none';
         }
     });
 
-    // Update modal close handlers to show NuestrosVinos section
-    document.querySelector('.volver-tienda')?.addEventListener('click', function(event) {
-        event.preventDefault();
-        const checkoutSection = document.getElementById('checkout-section');
-        const nuestrosVinosSection = document.getElementById('NuestrossVinos');
-        
-        if (checkoutSection && nuestrosVinosSection) {
-            checkoutSection.style.display = 'none';
-            nuestrosVinosSection.style.display = 'block';
-            document.getElementById('modal').style.display = 'none';
-            window.location.href = '#NuestrossVinos';
-        }
-    });
-    // Eliminar este event listener redundante que redirige a compra.html
-    // if (botonComprar) {
-    //     botonComprar.addEventListener('click', function(event) {
-    //         event.preventDefault();
-    //         localStorage.setItem('cursosCompra', JSON.stringify(obtenerCursosLocalStorage()));
-    //         window.location.href = 'compra.html';
-    //     });
-    // }
+    // Botón Finalizar Compra en el modal
+    const finalizarCompraModal = document.querySelector('.finalizar-compra-modal');
+    if (finalizarCompraModal) {
+        finalizarCompraModal.addEventListener('click', function(event) {
+            event.preventDefault();
+            
+            // Validar campos del formulario
+            const formModal = document.getElementById('form-compra-modal');
+            const camposRequeridos = formModal.querySelectorAll('[required]');
+            let formValido = true;
+            
+            camposRequeridos.forEach(campo => {
+                if (!campo.value.trim()) {
+                    campo.classList.add('campo-invalido');
+                    formValido = false;
+                } else {
+                    campo.classList.remove('campo-invalido');
+                }
+            });
+            
+            // Validaciones específicas según el método de pago
+            const metodoPago = document.getElementById('metodo-pago-modal').value;
+            
+            if (metodoPago === 'tarjeta') {
+                // Validar número de tarjeta según el tipo seleccionado
+                const numeroTarjeta = document.getElementById('tarjeta-modal').value;
+                const tipoTarjeta = document.getElementById('lstTipoTarjeta-modal').value;
+                
+                const tarjetas = {
+                    VISA: /^4[0-9]{12}(?:[0-9]{3})?$/,
+                    MASTERCARD: /^5[1-5][0-9]{14}$/,
+                    AMEX: /^3[47][0-9]{13}$/,
+                    CABAL: /^(6042|6043|6044|6045|6046|5896)[0-9]{12}$/,
+                    NARANJA: /^(589562|402917|402918|527571|527572|0377798|0377799)[0-9]*$/
+                };
+                
+                if (!tarjetas[tipoTarjeta].test(numeroTarjeta)) {
+                    document.getElementById('tarjeta-modal').classList.add('campo-invalido');
+                    formValido = false;
+                }
+                
+                // Validar CVV (debe ser numérico y tener 3 dígitos)
+                const cvv = document.getElementById('cvv-modal').value;
+                if (!/^[0-9]{3}$/.test(cvv)) {
+                    document.getElementById('cvv-modal').classList.add('campo-invalido');
+                    formValido = false;
+                }
+            }
+            
+            // Validar email
+            const email = document.getElementById('email-modal').value;
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.trim() !== '') {
+                document.getElementById('email-modal').classList.add('campo-invalido');
+                formValido = false;
+            }
+            
+            // Validar teléfono (solo números)
+            const telefono = document.getElementById('telefono-modal').value;
+            if (!/^[0-9]{7,15}$/.test(telefono.replace(/[\s-]/g, '')) && telefono.trim() !== '') {
+                document.getElementById('telefono-modal').classList.add('campo-invalido');
+                formValido = false;
+            }
+            
+            if (!formValido) {
+                // Mostrar modal de datos faltantes o inválidos
+                document.getElementById('modalDatos').style.display = 'block';
+                return;
+            }
+            
+            // Ocultar modal de compra y mostrar modal de éxito
+            document.getElementById('modalCompra').style.display = 'none';
+            document.getElementById('modal').style.display = 'block';
+            
+            // Limpiar carrito y formulario
+            vaciarcarrito();
+            formModal.reset();
+        });
+    }
 });
 
 
