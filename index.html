@@ -124,6 +124,74 @@
           </section>
 
         </main>
+
+
+
+        <div id="seccion-compra" class="seccion" style="display: none;">
+                <div class="mainscreen">
+                    <div class="leftside">
+                        <div id="carrito-compra">
+                            <div class="carrito-container">
+                                <h2>Tu Carrito</h2>
+                                <table id="lista-carrito-compra" class="u-full-width">
+                                    <thead>
+                                        <tr>
+                                            <th>Imagen</th>
+                                            <th>Nombre</th>
+                                            <th>Precio</th>
+                                            <th>Cant</th>
+                                            <th><p id="precio-total-compra">Total: $0.00</p></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                                <button id="vaciar-carrito-compra" class="buttonShop u-full-width">Vaciar Carrito</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rightside">
+                        <form action="#" id="form-compra">
+                                    <h2>Información de Envío</h2>
+                                    <label for="nombre">Nombre</label>
+                                    <input type="text" class="inputbox" id="nombre" name="nombre" required />
+                            
+                                    <label for="correo">Correo Electrónico</label>
+                                    <input type="email" class="inputbox" id="correo" name="correo" required />
+                            
+                                    <label for="direccion">Dirección de Envío</label>
+                                    <textarea id="direccion" class="inputbox" name="direccion" rows="1" required></textarea>
+                    
+                            <label for="lstTipoTarjeta">Tipo de Tarjeta</label>
+                            <select id="lstTipoTarjeta">
+                                <option value="VISA">VISA</option>
+                                <option value="MASTERCARD">Mastercard</option>
+                                <option value="AMEX">AMEX</option>
+                                <option value="CABAL">Cabal</option>
+                                <option value="NARANJA">Naranja</option>
+                            </select>
+                    
+                            <label for="nro_tarjeta">Número de Tarjeta</label>
+                            <input type="text" class="inputbox" id="nro_tarjeta" />
+                    
+                            <div class="expcvv">
+                                <label for="exp_date">Fecha de Vencimiento</label>
+                                <input type="month" class="inputbox" id="exp_date" name="exp_date" required />
+                    
+                                <label for="cvv">CVV</label>
+                                <input type="text" class="inputbox" id="cvv" name="cvv" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, ''); this.value = this.value.slice(0, 3);" required />
+                            </div>
+                    
+                            <button type="submit" class="button bshop">Finalizar Compra</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
         <footer>
             <ul>
                 <li>Profesor Fabrizio Carlassara</li>

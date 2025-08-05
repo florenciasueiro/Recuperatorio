@@ -874,10 +874,30 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
             const checkoutSection = document.getElementById('checkout-section');
             const nuestrosVinosSection = document.getElementById('NuestrossVinos');
+            const sobreNosotrosSection = document.getElementById('sobreNosotros');
             
-            if (checkoutSection && nuestrosVinosSection) {
+            if (checkoutSection) {
+                // Ocultar otras secciones
+                if (nuestrosVinosSection) nuestrosVinosSection.style.display = 'none';
+                if (sobreNosotrosSection) sobreNosotrosSection.style.display = 'none';
+                
+                // Mostrar sección de checkout
                 checkoutSection.style.display = 'block';
-                nuestrosVinosSection.style.display = 'none';
+                
+                // Copiar elementos del carrito al carrito de checkout
+                const listaCarrito = document.querySelector('#lista-carrito tbody');
+                const listaCarritoCheckout = document.querySelector('#lista-carrito-checkout tbody');
+                if (listaCarrito && listaCarritoCheckout) {
+                    listaCarritoCheckout.innerHTML = listaCarrito.innerHTML;
+                }
+                
+                // Actualizar precio total en checkout
+                const precioTotal = document.querySelector('#precio-total').textContent;
+                const precioTotalCheckout = document.querySelector('#precio-total-checkout');
+                if (precioTotalCheckout) {
+                    precioTotalCheckout.textContent = precioTotal;
+                }
+                
                 window.location.href = '#checkout-section';
             }
         });
@@ -909,13 +929,14 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = '#NuestrossVinos';
         }
     });
-    if (botonComprar) {
-        botonComprar.addEventListener('click', function(event) {
-            event.preventDefault();
-            localStorage.setItem('cursosCompra', JSON.stringify(obtenerCursosLocalStorage()));
-            window.location.href = 'compra.html';
-        });
-    }
+    // Eliminar este event listener redundante que redirige a compra.html
+    // if (botonComprar) {
+    //     botonComprar.addEventListener('click', function(event) {
+    //         event.preventDefault();
+    //         localStorage.setItem('cursosCompra', JSON.stringify(obtenerCursosLocalStorage()));
+    //         window.location.href = 'compra.html';
+    //     });
+    // }
 });
 
 
