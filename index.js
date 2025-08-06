@@ -653,12 +653,6 @@ function eliminarCursoLS(curso) {
   
     localStorage.setItem('cursos', JSON.stringify(cursosLS));
   }
-  
-
-
-function vaciarLs() {
-    localStorage.clear();
-}
 
 
 function vaciarcarrito() {
@@ -994,7 +988,8 @@ if (botonFinalizarCompra) {
             document.getElementById('modalDatos').style.display = 'block';
             
         } else {
-            vaciarcarrito();
+            vaciarLs();
+            vaciarcarrito()
             document.getElementById('modal-carrito').style.display = 'none';
 
             document.getElementById('modal').style.display = 'block';
