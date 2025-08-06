@@ -989,7 +989,7 @@ if (botonFinalizarCompra) {
             
         } else {
             vaciarLs();
-            vaciarcarrito()
+            vaciarcarrito() 
             document.getElementById('modal-carrito').style.display = 'none';
 
             document.getElementById('modal').style.display = 'block';

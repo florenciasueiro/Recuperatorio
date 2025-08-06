@@ -2,7 +2,7 @@
 
 ## Alumno/s
 
-- Alumno/a 1 (@usuariodeGitHub)
+- Alumno/a 1 (@florenciasueiro)
 - Alumno/a 2 (@usuariodeGitHub)
 
 ## Observaciones
